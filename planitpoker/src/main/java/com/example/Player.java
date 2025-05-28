@@ -1,3 +1,3 @@
-public class Player{
+public class T4B_Player{
 
 }
