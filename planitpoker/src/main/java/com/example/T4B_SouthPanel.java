@@ -1,10 +1,9 @@
 package com.example;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+
 import java.util.LinkedList;
 import java.util.Queue;
-
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -16,9 +15,9 @@ import javax.swing.JTextArea;
  *
  * @author javiergs
  */
-public class SouthPanel extends JPanel {
+public class T4B_SouthPanel extends JPanel {
 	
-	public SouthPanel() {
+	public T4B_SouthPanel() {
 		setBackground(new Color(161, 190, 239));
 		setLayout(new BorderLayout());
 		JTabbedPane storyTabs = new JTabbedPane();
@@ -28,23 +27,23 @@ public class SouthPanel extends JPanel {
        	 	resultsPanel.add(resultLabel);
 	
 		//Create StoriesNanny instance to access stories
-		StoriesNanny storiesNanny = new StoriesNanny(null); // Pass appropriate Main instance
+		T4B_StoriesNanny storiesNanny = new T4B_StoriesNanny(null); // Pass appropriate Main instance
 		storiesNanny.importStories(); // Import stories to populate the lists
-		Queue<Story> newStories = storiesNanny.getNewStories(); // Access newStories
+		Queue<T4B_Story> newStories = storiesNanny.getNewStories(); // Access newStories
 	
-		LinkedList<Story> prevStories = storiesNanny.getPrevStories();
+		LinkedList<T4B_Story> prevStories = storiesNanny.getPrevStories();
 
 		
 		//Populate active stories with newStories
 		StringBuilder activeStoriesText = new StringBuilder();
-		for (Story story : newStories) {
+		for (T4B_Story story : newStories) {
 			activeStoriesText.append(story.getTitle()).append("\n");
 		}
 		JTextArea activeStories = new JTextArea(activeStoriesText.toString());
 		
 		 //Populate completed stories with prevStories
 		StringBuilder completedStoriesText = new StringBuilder();
-		for (Story story : prevStories) {
+		for (T4B_Story story : prevStories) {
 			completedStoriesText.append(String.format("%-50s %10s%n", story.getTitle(), story.getScore())).append("\n");
 		}
 		JTextArea completedStories = new JTextArea(completedStoriesText.toString());
@@ -63,7 +62,7 @@ public class SouthPanel extends JPanel {
 	}
 	
     public void updateResults(){
-        double average = Blackboard.calculateAverage();
+        double average = T4B_Blackboard.calculateAverage();
         resultLabel.setText(String.format("Average: %.2f", average));
     }
 

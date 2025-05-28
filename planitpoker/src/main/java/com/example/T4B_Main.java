@@ -10,14 +10,14 @@ import javax.swing.JFrame;
  * /** */
 public class T4B_Main extends JFrame {
 	
-	public Main() {
-		LoginNanny loginNanny = new LoginNanny(this);
-		LoginPanel loginPanel = new LoginPanel(loginNanny);
+	public T4B_Main() {
+		T4B_LoginNanny loginNanny = new T4B_LoginNanny(this);
+		T4B_LoginPanel loginPanel = new T4B_LoginPanel(loginNanny);
 		add(loginPanel);
 	}
 	
 	public static void main(String[] args) {
-		Main main = new Main();
+		T4B_Main main = new T4B_Main();
 		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setSize(400, 400);
 		main.setLocationRelativeTo(null);

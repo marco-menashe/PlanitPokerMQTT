@@ -1,11 +1,11 @@
 package com.example;
 
-public class Story {
+public class T4B_Story {
     private String title;
   
     private int score;
 
-    public Story(String title, int score) {
+    public T4B_Story(String title, int score) {
         this.title = title;
         this.score = score;
 

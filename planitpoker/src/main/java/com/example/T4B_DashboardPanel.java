@@ -8,13 +8,13 @@ import java.awt.*;
  *
  * @author javiergs
  */
-public class DashboardPanel extends JPanel {
+public class T4B_DashboardPanel extends JPanel {
     private SouthPanel southPanel;
 
-    public DashboardPanel(DashboardNanny dashboardNanny) {
+    public T4B_DashboardPanel(T4B_DashboardNanny dashboardNanny) {
         setLayout(new BorderLayout());
 
-        CardsPanel cardsPanel = new CardsPanel(dashboardNanny);
+        T4B_CardsPanel cardsPanel = new T4B_CardsPanel(dashboardNanny);
         dashboardNanny.setCardsPanel(cardsPanel);
 
         southPanel = new SouthPanel();

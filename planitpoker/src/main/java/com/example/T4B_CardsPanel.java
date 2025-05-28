@@ -1,29 +1,28 @@
 package com.example;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * Panel that displays the cards used for estimating.
  *
  * @author javiergs
  */
-public class CardsPanel extends JPanel {
+public class T4B_CardsPanel extends JPanel {
     private static final String[] CARD_VALUES = {
             "0", "½", "1", "2", "3", "5", "8", "20", "40", "10", "0", "?"
     };
 
-    private final DashboardNanny dashboardNanny;
+    private final T4B_DashboardNanny dashboardNanny;
     private JButton selectedCard;
     private static final Color DEFAULT_COLOR = new Color(172, 248, 199);
     private static final Color HOVER_COLOR = new Color(200, 200, 200);
     private static final Color SELECTED_COLOR = Color.YELLOW;
     private static final Color CONFIRMED_COLOR = Color.GREEN;
 
-    public CardsPanel(DashboardNanny dashboardNanny) {
+    public T4B_CardsPanel(T4B_DashboardNanny dashboardNanny) {
         this.dashboardNanny = dashboardNanny;
         setLayout(new GridLayout(4, 3, 10, 10));
 
