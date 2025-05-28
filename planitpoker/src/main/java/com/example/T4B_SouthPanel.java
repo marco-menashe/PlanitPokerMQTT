@@ -10,8 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-
-
 /**
  * Stories organized in tabs.
  * The first tab contains the active stories, and the second one contains the completed stories.
@@ -25,6 +23,10 @@ public class SouthPanel extends JPanel {
 		setLayout(new BorderLayout());
 		JTabbedPane storyTabs = new JTabbedPane();
 		
+		JPanel resultsPanel = new JPanel();
+        	resultLabel = new JLabel("Average: -");
+       	 	resultsPanel.add(resultLabel);
+	
 		//Create StoriesNanny instance to access stories
 		StoriesNanny storiesNanny = new StoriesNanny(null); // Pass appropriate Main instance
 		storiesNanny.importStories(); // Import stories to populate the lists
@@ -59,6 +61,11 @@ public class SouthPanel extends JPanel {
 		
 		add(storyTabs, BorderLayout.CENTER);
 	}
+	
+    public void updateResults(){
+        double average = Blackboard.calculateAverage();
+        resultLabel.setText(String.format("Average: %.2f", average));
+    }
 
 }
 
