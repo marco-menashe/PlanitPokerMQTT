@@ -12,23 +12,23 @@ import java.util.List;
  * @author AdrianSanchez
  * @version 1.0
  */
-public class Repository {
+public class T4B_Repository {
 
 
-	private static Repository instance;
+	private static T4B_Repository instance;
 
 	private final PropertyChangeSupport pcs;
 
 	private String roomID;
-	private final List<Player> players;
+	private final List<T4B_Player> players;
 	// game state
-	private Repository(){
-		this.pcs = new PropertyChangeSupport()
+	private T4B_Repository(){
+		pcs = new PropertyChangeSupport(this);
 	}
 
-	public static com.example.Repository getInstance() {
+	public static T4B_Repository getInstance() {
 		if (instance == null){
-			instance = new Repository();
+			instance = new T4B_Repository();
 		}
 		return instance;
 	}

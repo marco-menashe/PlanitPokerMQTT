@@ -8,7 +8,7 @@ import java.util.Queue;
 /**
  * Controller responsible for managing the stories and their interactions with the user interface.
  *
- * @author javiergs
+ * @author Marco Menashe
  */
 public class StoriesNanny {
 	

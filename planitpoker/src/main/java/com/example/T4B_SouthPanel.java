@@ -16,7 +16,7 @@ import javax.swing.JTextArea;
  *
  * @author javiergs
  */
-public class SouthPanel extends JPanel {
+public class T4B_SouthPanel extends JPanel {
 	
 	public SouthPanel() {
 		setBackground(new Color(161, 190, 239));

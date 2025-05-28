@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  *
  * @author javiergs
  */
-public class CardsPanel extends JPanel {
+public class T4B_CardsPanel extends JPanel {
     private static final String[] CARD_VALUES = {
             "0", "½", "1", "2", "3", "5", "8", "20", "40", "10", "0", "?"
     };
@@ -23,7 +23,7 @@ public class CardsPanel extends JPanel {
     private static final Color SELECTED_COLOR = Color.YELLOW;
     private static final Color CONFIRMED_COLOR = Color.GREEN;
 
-    public CardsPanel(DashboardNanny dashboardNanny) {
+    public T4B_CardsPanel(DashboardNanny dashboardNanny) {
         this.dashboardNanny = dashboardNanny;
         setLayout(new GridLayout(4, 3, 10, 10));
 

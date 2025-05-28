@@ -1,8 +1,8 @@
-package org.planit;
+package com.example;
 
 public class T4B_Card {
 
-    private int value;
+}   private int value;
     private boolean isRevealed;
 
     public Card(int value) {
