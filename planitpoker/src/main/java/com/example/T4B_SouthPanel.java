@@ -30,9 +30,9 @@ public class T4B_SouthPanel extends JPanel {
 		//Create StoriesNanny instance to access stories
 		T4B_StoriesNanny storiesNanny = new T4B_StoriesNanny(null); // Pass appropriate Main instance
 		storiesNanny.importStories(); // Import stories to populate the lists
-		Queue<T4B_Story> newStories = storiesNanny.getNewStories(); // Access newStories
+		Queue<T4B_Story> newStories = T4B_storiesNanny.getNewStories(); // Access newStories
 	
-		LinkedList<T4B_Story> prevStories = storiesNanny.getPrevStories();
+		LinkedList<T4B_Story> prevStories = T4B_storiesNanny.getPrevStories();
 
 		
 		//Populate active stories with newStories

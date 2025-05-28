@@ -29,8 +29,8 @@ public class T4B_LoginNanny {
 
 	private void switchGUI() {
 		main.setTitle("Room");
-		CreateRoomNanny createRoomNanny = new CreateRoomNanny(main);
-		CreateRoomPanel createRoomPanel = new CreateRoomPanel(createRoomNanny);
+		T4B_CreateRoomNanny createRoomNanny = new T4B_CreateRoomNanny(main);
+		T4B_CreateRoomPanel createRoomPanel = new T4B_CreateRoomPanel(createRoomNanny);
 		main.setContentPane(createRoomPanel);
 		main.setSize(500, 500);
 		main.revalidate();

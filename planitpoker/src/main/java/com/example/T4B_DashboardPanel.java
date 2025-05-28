@@ -1,7 +1,8 @@
 package com.example;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
 
 /**
  * Integrates a dashboard with the cards, timer, and stories.
@@ -21,7 +22,7 @@ public class T4B_DashboardPanel extends JPanel {
 
         add(cardsPanel, BorderLayout.CENTER);
         add(southPanel, BorderLayout.SOUTH);
-        add(new WestPanel(dashboardNanny, this), BorderLayout.EAST);
+        add(new T4B_WestPanel(dashboardNanny, this), BorderLayout.EAST);
     }
 
     public void updateResults(){

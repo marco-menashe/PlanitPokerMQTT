@@ -41,12 +41,12 @@ public class T4B_StoriesNanny {
 
 	}
 	
-	public LinkedList<Story> getPrevStories() {
+	public LinkedList<T4B_Story> getPrevStories() {
 		prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
 		return prevStories;
 	}
 	
-	public Queue<Story> getNewStories() {		
+	public Queue<T4B_Story> getNewStories() {		
 		return newStories;
 	}
 	
