@@ -11,7 +11,10 @@ public class T4B_DashboardNanny {
     private boolean voteConfirmed = false;
     private T4B_CardsPanel cardsPanel;
 
-    public T4B_DashboardNanny(){
+    public T4B_DashboardNanny(T4B_CardsPanel cardsPanel) {
+        this.cardsPanel = cardsPanel;
+        this.currentVote = null;
+        this.voteConfirmed = false;
     }
 
     public void setCardsPanel(T4B_CardsPanel cardsPanel){

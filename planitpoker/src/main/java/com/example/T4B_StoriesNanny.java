@@ -13,42 +13,42 @@ import java.util.Queue;
 public class T4B_StoriesNanny {
 	
 	private final T4B_Main main;
-	private final Queue<T4B_Story> newStories = new LinkedList<>();
-	private final LinkedList<T4B_Story> prevStories = new LinkedList<>(); 
+	// private final Queue<T4B_Story> newStories = new LinkedList<>();
+	// private final LinkedList<T4B_Story> prevStories = new LinkedList<>(); 
 		
 	public T4B_StoriesNanny(T4B_Main main) {
 		this.main = main;
 	}
 	
 	public void saveAndAddNew(String text) {
-		newStories.add(new T4B_Story(text, 0));
+		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));
 		switchGUI();
 		
 	}
 	
 	public void saveAndClose(String text) {
-		System.out.println(text);
-		T4B_Repository.addStory(text);
+		// System.out.println(text);
+		// T4B_Repository.getInstance().addStory(text);
 		switchGUI();
 	}
 	
-	public void sortPrevStories() {
-		prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
-	}
+	// public void sortPrevStories() {
+	// 	prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
+	// }
 
-	public void importStories() {
+	// public void importStories() {
 
 
-	}
+	// }
 	
-	public LinkedList<T4B_Story> getPrevStories() {
-		prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
-		return prevStories;
-	}
+	// public LinkedList<T4B_Story> getPrevStories() {
+	// 	prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
+	// 	return prevStories;
+	// }
 	
-	public Queue<T4B_Story> getNewStories() {		
-		return newStories;
-	}
+	// public Queue<T4B_Story> getNewStories() {		
+	// 	return newStories;
+	// }
 	
 	public void cancel() {
 		System.out.println("canceling...");
