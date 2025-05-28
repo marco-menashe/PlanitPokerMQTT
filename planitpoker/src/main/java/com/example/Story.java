@@ -1,4 +1,4 @@
-package three;
+package com.example;
 
 public class Story {
     private String title;

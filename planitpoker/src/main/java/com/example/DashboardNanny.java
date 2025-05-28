@@ -1,6 +1,5 @@
-package four;
+package com.example;
 
-import one.Main;
 
 /**
  * Controller responsible for managing the dashboard and its interactions.

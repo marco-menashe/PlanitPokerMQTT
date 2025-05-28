@@ -1,11 +1,9 @@
-package three;
+package com.example;
 
-import four.DashboardNanny;
-import four.DashboardPanel;
 import java.util.LinkedList;
 import java.util.Queue;
-import one.Blackboard;
-import one.Main;
+
+
 
 /**
  * Controller responsible for managing the stories and their interactions with the user interface.

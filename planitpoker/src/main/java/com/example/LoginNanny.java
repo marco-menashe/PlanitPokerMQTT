@@ -1,7 +1,6 @@
-package one;
+package com.example;
 
-import two.CreateRoomNanny;
-import two.CreateRoomPanel;
+
 
 /**
  * LoginNanny is responsible for handling the login process.

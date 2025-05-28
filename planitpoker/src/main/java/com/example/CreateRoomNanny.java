@@ -1,9 +1,5 @@
-package two;
+package com.example;
 
-import one.Blackboard;
-import one.Main;
-import three.StoriesNanny;
-import three.StoriesPanel;
 
 /**
  * Act as a controller for the CreateRoomPanel.

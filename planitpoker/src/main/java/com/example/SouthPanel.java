@@ -1,10 +1,16 @@
-package four;
-import java.awt.*;
+package com.example;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.Queue;
-import javax.swing.*;
-import three.StoriesNanny;
-import three.Story;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+
+
 
 /**
  * Stories organized in tabs.

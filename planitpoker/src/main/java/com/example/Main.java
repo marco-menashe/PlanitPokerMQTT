@@ -1,6 +1,6 @@
-package one;
+package com.example;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  * Main class to create a JFrame and display the login panel.

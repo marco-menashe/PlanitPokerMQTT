@@ -1,7 +1,12 @@
-package four;
+package com.example;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Panel that contains the left side of the dashboard.

@@ -1,7 +1,12 @@
-package two;
+package com.example;
+import java.awt.GridLayout;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 /**
  * Creating a new room.
