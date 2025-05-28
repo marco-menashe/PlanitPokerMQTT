@@ -22,8 +22,8 @@ public class T4B_Publisher {
     }
 
     // Add username to the method signature and payload
-    public void publishStory(String username, String storyTitle, int score) throws MqttException {
-        String payload = username + "|" + storyTitle + "|" + score;
+    public void publishStory(String storyTitle, int score) throws MqttException {
+        String payload = storyTitle + "|" + score;
         MqttMessage message = new MqttMessage(payload.getBytes());
         client.publish(topic, message);
     }

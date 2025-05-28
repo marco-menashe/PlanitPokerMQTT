@@ -34,19 +34,23 @@ public class T4B_Subscriber implements MqttCallback {
         String payload = new String(message.getPayload());
         System.out.println("Received story update: " + payload);
 
-        // Example: payload = "username|Story Title|5"
+        // Example: payload = "Story Title|5"
         String[] parts = payload.split("\\|");
-        if (parts.length == 3) {
-            String username = parts[0];
-            String title = parts[1];
-            int score = Integer.parseInt(parts[2]);
+        if (parts.length == 2) {
+            String title = parts[0];
+            int score = Integer.parseInt(parts[1]);
         
-            System.out.println("Story from user: " + username + ", title: " + title + ", score: " + score);
-            repository.saveStory(title, score, username);
+            System.out.println("Story title: " + title + ", score: " + score);
+            T4B_Repository.saveStory(title, score);
         }
     }
 
     public void disconnect() throws MqttException {
         client.disconnect();
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken token) {
+        // No action needed for subscriber
     }
 }

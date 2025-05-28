@@ -16,9 +16,9 @@ import javax.swing.SwingConstants;
  *
  * @author javiergs
  */
-public class StoriesPanel extends JPanel {
+public class T4B_StoriesPanel extends JPanel {
 	
-	public StoriesPanel(StoriesNanny storiesNanny) {
+	public T4B_StoriesPanel(T4B_StoriesNanny storiesNanny) {
 		setLayout(new BorderLayout());
 		
 		JLabel titleLabel = new JLabel("Create New Story", SwingConstants.CENTER);

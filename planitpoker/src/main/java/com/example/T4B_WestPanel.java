@@ -14,9 +14,9 @@ import javax.swing.JTextField;
  *
  * @author javiergs
  */
-public class WestPanel extends JPanel {
+public class T4B_WestPanel extends JPanel {
 	
-    public WestPanel(DashboardNanny dashboardNanny, DashboardPanel dashboardPanel) {
+    public T4B_WestPanel(T4B_DashboardNanny dashboardNanny, T4B_DashboardPanel dashboardPanel) {
         setBackground(new Color(255, 204, 204));
         setLayout(new GridLayout(8, 1));
 

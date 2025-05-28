@@ -26,6 +26,12 @@ public class T4B_Repository {
 		pcs = new PropertyChangeSupport(this);
 	}
 
+	public void saveStory(){}
+
+	public void addCurrentRoom(){}
+	
+	public void addCurrentMode(){}
+
 	public static T4B_Repository getInstance() {
 		if (instance == null){
 			instance = new T4B_Repository();

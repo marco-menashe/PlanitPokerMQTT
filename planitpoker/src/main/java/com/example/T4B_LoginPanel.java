@@ -13,9 +13,9 @@ import javax.swing.SwingConstants;
  *
  * @author javiergs
  */
-public class LoginPanel extends JPanel {
+public class T4B_LoginPanel extends JPanel {
 	
-	public LoginPanel(LoginNanny joinRoomNanny) {
+	public T4B_LoginPanel(T4B_LoginNanny joinRoomNanny) {
 		JLabel titleLabel = new JLabel("Let's start!");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel subtitleLabel = new JLabel("Join the room:");

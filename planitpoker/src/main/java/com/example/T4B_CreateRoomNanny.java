@@ -6,18 +6,18 @@ package com.example;
  *
  * @author javiergs
  */
-public class CreateRoomNanny {
+public class T4B_CreateRoomNanny {
 	
-	private Main main;
+	private T4B_Main main;
 	
-	public CreateRoomNanny(Main main) {
+	public T4B_CreateRoomNanny(T4B_Main main) {
 		this.main = main;
 	}
 	
 	public void createRoom(String name, String selectedItem) {
 		System.out.println(" Creating room..." + name + ", mode: " + selectedItem);
-		Blackboard.addCurrentRoom(name);
-		Blackboard.addCurrentMode(selectedItem);
+		T4B_Repository.addCurrentRoom(name);
+		T4B_Repository.addCurrentMode(selectedItem);
 		switchGUI();
 	}
 	

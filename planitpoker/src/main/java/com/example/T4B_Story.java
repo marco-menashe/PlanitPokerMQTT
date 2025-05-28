@@ -13,7 +13,7 @@ public class T4B_Story {
 
     private String username;
 
-    public T4B_Story(String title, int score, String username) {
+    public T4B_Story(String title, int score) {
         this.title = title;
         this.score = score;
         this.username = username;

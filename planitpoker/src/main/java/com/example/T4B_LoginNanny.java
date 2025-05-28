@@ -7,11 +7,11 @@ package com.example;
  *
  * @author javiergs
  */
-public class LoginNanny {
+public class T4B_LoginNanny {
 	
-	private Main main;
+	private T4B_Main main;
 	
-	public LoginNanny(Main main) {
+	public T4B_LoginNanny(T4B_Main main) {
 		this.main = main;
 	}
 	
@@ -23,7 +23,7 @@ public class LoginNanny {
 	
 	public void login(String name) {
 		System.out.println(name + " Logging in...");
-		Blackboard.addName(name);
+		T4B_Repository.addName(name);
 		switchGUI();
 	}
 

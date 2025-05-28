@@ -6,15 +6,15 @@ package com.example;
  *
  * @author javiergs
  */
-public class DashboardNanny {
+public class T4B_DashboardNanny {
     private String currentVote;
     private boolean voteConfirmed = false;
-    private CardsPanel cardsPanel;
+    private T4B_CardsPanel cardsPanel;
 
-    public DashboardNanny(){
+    public T4B_DashboardNanny(){
     }
 
-    public void setCardsPanel(CardsPanel cardsPanel){
+    public void setCardsPanel(T4B_CardsPanel cardsPanel){
         this.cardsPanel = cardsPanel;
     }
 
@@ -29,7 +29,7 @@ public class DashboardNanny {
             voteConfirmed = true;
             try {
                 double numericVote = convertVoteToNumber(currentVote);
-                Blackboard.addVote(numericVote);
+                T4B_Repository.addVote(numericVote);
                 if(cardsPanel != null){
                     cardsPanel.lockSelection();
                 }
