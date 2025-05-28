@@ -1,39 +1,38 @@
 package com.example;
 
 import java.util.LinkedList;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Shared data structure for the application.
  *
- * @author javiergs
+ * @author AdrianSanchez
+ * @version 1.0
  */
 public class Repository {
 
 
-	private static Repository
+	private static Repository instance;
 
+	private final PropertyChangeSupport pcs;
 
+	private String roomID;
+	private final List<Player> players;
+	// game state
+	private Repository(){
+		this.pcs = new PropertyChangeSupport()
+	}
 
-	private static LinkedList<String> names = new LinkedList<>();
-	private static LinkedList<String> stories = new LinkedList<>();
-	private static String currentRoom;
-	private static String mode;
-	
-	public static void addName(String name) {
-		names.add(name);
+	public static com.example.Repository getInstance() {
+		if (instance == null){
+			instance = new Repository();
+		}
+		return instance;
 	}
-	
-	public static void addStory(String story) {
-		stories.add(story);
-	}
-	
-	public static void addCurrentRoom(String name) {
-		currentRoom = name;
-	}
-	
-	public static void addCurrentMode(String selectedItem) {
-		mode = selectedItem;
-	}
+
 
 }
 
