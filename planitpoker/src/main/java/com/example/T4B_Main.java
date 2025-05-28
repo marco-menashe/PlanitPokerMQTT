@@ -8,7 +8,7 @@ import javax.swing.JFrame;
  * @author javiergs
  *
  * /** */
-public class Main extends JFrame {
+public class T4B_Main extends JFrame {
 	
 	public Main() {
 		LoginNanny loginNanny = new LoginNanny(this);

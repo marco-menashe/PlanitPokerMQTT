@@ -7,8 +7,13 @@ import java.util.LinkedList;
  *
  * @author javiergs
  */
-public class Blackboard {
-	
+public class Repository {
+
+
+	private static Repository
+
+
+
 	private static LinkedList<String> names = new LinkedList<>();
 	private static LinkedList<String> stories = new LinkedList<>();
 	private static String currentRoom;
