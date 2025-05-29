@@ -23,13 +23,13 @@ public class T4B_LoginNanny {
 	
 	public void login(String name) {
 		System.out.println(name + " Logging in...");
-		T4B_Blackboard.addName(name);
+		T4B_Repository.getInstance().addName(name);
 		switchGUI();
 	}
 
 	private void switchGUI() {
 		main.setTitle("Room");
-		CreateRoomNanny createRoomNanny = new CreateRoomNanny(main);
+		T4B_CreateRoomNanny createRoomNanny = new T4B_CreateRoomNanny(main);
 		T4B_CreateRoomPanel createRoomPanel = new T4B_CreateRoomPanel(createRoomNanny);
 		main.setContentPane(createRoomPanel);
 		main.setSize(500, 500);

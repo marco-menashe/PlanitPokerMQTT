@@ -1,9 +1,9 @@
 package com.example;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.*;
 
 /**
  * Panel that displays the cards used for estimating.
