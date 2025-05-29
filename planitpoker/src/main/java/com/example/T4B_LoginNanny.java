@@ -23,7 +23,7 @@ public class T4B_LoginNanny {
 	
 	public void login(String name) {
 		System.out.println(name + " Logging in...");
-		T4B_Repository.addName(name);
+		T4B_Repository.getInstance().addName(name);
 		switchGUI();
 	}
 

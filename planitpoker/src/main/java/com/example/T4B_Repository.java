@@ -59,7 +59,7 @@ public class T4B_Repository {
 	public void addName(String name){
 		T4B_Player player = new T4B_Player(name, generatePlayerID(name));
 		players.add(player);
-		pcs.firePropertyCHange("playerAdded", null, player);
+		pcs.firePropertyChange("playerAdded", null, player);
 	}
 	private String generatePlayerID(String name){
 		return name + "_" + System.currentTimeMillis();
@@ -70,7 +70,7 @@ public class T4B_Repository {
 	}
 
 	public void addVote(double vote){
-		currentVote.add(vote);
+		currentVotes.add(vote);
 		pcs.firePropertyChange("voteAdded", null, vote);
 	}
 
@@ -99,7 +99,7 @@ public class T4B_Repository {
 		pcs.firePropertyChange("storyAdded", null, story);
 	}
 
-	public void add(String title, int score){
+	public void addStory(String title, int score){
 		T4B_Story story = new T4B_Story(title, score);
 		prevStories.add(story);
 		pcs.firePropertyChange("storyCompleted", null, story);
@@ -128,8 +128,8 @@ public class T4B_Repository {
 		pcs.addPropertyChangeListener(listener);
 	}
 
-	public void fireCustomChange(String property, Object oldVal, Object newal){
-		pcs.firePropertyChange(property, oldVal, newVal)
+	public void fireCustomChange(String property, Object oldVal, Object newVal){
+		pcs.firePropertyChange(property, oldVal, newVal);
 	}
 }
 

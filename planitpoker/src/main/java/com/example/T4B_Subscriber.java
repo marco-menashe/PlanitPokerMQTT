@@ -60,7 +60,7 @@ public class T4B_Subscriber implements MqttCallback {
                 String storyTitle = parts[1];
                 double voteValue = Double.parseDouble(parts[2]);
                 System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
-                T4B_Repository.getInstance()addVote(username, storyTitle, voteValue);
+                T4B_Repository.getInstance().addVote(voteValue);
             }
         }
     }

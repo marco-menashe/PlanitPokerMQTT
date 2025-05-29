@@ -1,14 +1,12 @@
 package com.example;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 /**
  * Stories organized in tabs.
@@ -17,56 +15,60 @@ import javax.swing.JTextArea;
  * @author javiergs
  */
 public class T4B_SouthPanel extends JPanel {
-	
+
+	private JLabel resultLabel;
+
 	public T4B_SouthPanel() {
 		setBackground(new Color(161, 190, 239));
 		setLayout(new BorderLayout());
 		JTabbedPane storyTabs = new JTabbedPane();
-		
-		JPanel resultsPanel = new JPanel();
-        	resultLabel = new JLabel("Average: -");
-       	 	resultsPanel.add(resultLabel);
-	
-		//Create StoriesNanny instance to access stories
-		T4B_StoriesNanny storiesNanny = new T4B_StoriesNanny(null); // Pass appropriate Main instance
-		storiesNanny.importStories(); // Import stories to populate the lists
-		Queue<T4B_Story> newStories = T4B_storiesNanny.getNewStories(); // Access newStories
-	
-		LinkedList<T4B_Story> prevStories = T4B_storiesNanny.getPrevStories();
 
-		
-		//Populate active stories with newStories
+		// Add average vote label
+		JPanel resultsPanel = new JPanel();
+		resultLabel = new JLabel("Average: -");
+		resultsPanel.add(resultLabel);
+		add(resultsPanel, BorderLayout.NORTH);
+
+		// Get stories from repository instead of nanny
+		Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
+		LinkedList<T4B_Story> prevStories = T4B_Repository.getInstance().getPrevStories();
+
+		// Active stories
 		StringBuilder activeStoriesText = new StringBuilder();
 		for (T4B_Story story : newStories) {
 			activeStoriesText.append(story.getTitle()).append("\n");
 		}
 		JTextArea activeStories = new JTextArea(activeStoriesText.toString());
-		
-		 //Populate completed stories with prevStories
+		activeStories.setEditable(false);
+
+		// Completed stories
 		StringBuilder completedStoriesText = new StringBuilder();
 		for (T4B_Story story : prevStories) {
-			completedStoriesText.append(String.format("%-50s %10s%n", story.getTitle(), story.getScore())).append("\n");
+			completedStoriesText.append(String.format("%-50s %10d%n", story.getTitle(), story.getScore()));
 		}
 		JTextArea completedStories = new JTextArea(completedStoriesText.toString());
-		
-		//Adjust table height
+		completedStories.setEditable(false);
+
+		// Scroll panes
 		JScrollPane activeScrollPane = new JScrollPane(activeStories);
-		activeScrollPane.setPreferredSize(new Dimension(400, 150)); //Adjust height
-		
+		activeScrollPane.setPreferredSize(new Dimension(400, 150));
+
 		JScrollPane completedScrollPane = new JScrollPane(completedStories);
-		completedScrollPane.setPreferredSize(new Dimension(400, 150)); //Adjust height
-		
+		completedScrollPane.setPreferredSize(new Dimension(400, 150));
+
+		// Add tabs
 		storyTabs.addTab("Active Stories", activeScrollPane);
 		storyTabs.addTab("Completed Stories", completedScrollPane);
-		
+
 		add(storyTabs, BorderLayout.CENTER);
 	}
-	
-    public void updateResults(){
-        double average = T4B_Repository.calculateAverage();
-        resultLabel.setText(String.format("Average: %.2f", average));
-    }
 
+	public void updateResults() {
+		double average = T4B_Repository.calculateAverage();
+		if (Double.isNaN(average)) {
+			resultLabel.setText("Average: ?");
+		} else {
+			resultLabel.setText(String.format("Average: %.2f", average));
+		}
+	}
 }
-
-

@@ -3,67 +3,57 @@ package com.example;
 import java.util.LinkedList;
 import java.util.Queue;
 
-
-
 /**
  * Controller responsible for managing the stories and their interactions with the user interface.
+ * It interacts with the shared repository for persistence and updates.
  *
- * @author Marco Menashe
+ * @author Marco
  */
 public class T4B_StoriesNanny {
-	
+
 	private final T4B_Main main;
-	// private final Queue<T4B_Story> newStories = new LinkedList<>();
-	// private final LinkedList<T4B_Story> prevStories = new LinkedList<>(); 
-		
+
 	public T4B_StoriesNanny(T4B_Main main) {
 		this.main = main;
 	}
-	
+
 	public void saveAndAddNew(String text) {
-		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));
+		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // New story, no score yet
 		switchGUI();
-		
 	}
-	
+
 	public void saveAndClose(String text) {
-		// System.out.println(text);
-		// T4B_Repository.getInstance().addStory(text);
+		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // Same here
 		switchGUI();
 	}
-	
-	// public void sortPrevStories() {
-	// 	prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
-	// }
 
-	// public void importStories() {
+	public void importStories() {
+		// Optional: Load from file or simulate sample stories
+		T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 1", 0));
+		T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 2", 0));
+	}
 
+	public LinkedList<T4B_Story> getPrevStories() {
+		return T4B_Repository.getInstance().getPrevStories();
+	}
 
-	// }
-	
-	// public LinkedList<T4B_Story> getPrevStories() {
-	// 	prevStories.sort((s1, s2) -> Integer.compare(s1.getScore(), s2.getScore()));
-	// 	return prevStories;
-	// }
-	
-	// public Queue<T4B_Story> getNewStories() {		
-	// 	return newStories;
-	// }
-	
+	public Queue<T4B_Story> getNewStories() {
+		return T4B_Repository.getInstance().getNewStories();
+	}
+
 	public void cancel() {
 		System.out.println("canceling...");
 	}
-	
+
 	private void switchGUI() {
 		main.setTitle("dashboard");
-		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(main);
+		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null); // FIX: pass null or real panel
 		T4B_DashboardPanel dashboardPanel = new T4B_DashboardPanel(dashboardNanny);
+		dashboardNanny.setCardsPanel(dashboardPanel.getCardsPanel()); // Link them correctly
 		main.setContentPane(dashboardPanel);
 		main.setSize(800, 600);
 		main.setLocationRelativeTo(null);
 		main.revalidate();
 		main.repaint();
 	}
-
 }
-

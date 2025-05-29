@@ -1,10 +1,9 @@
 package com.example;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * Panel that displays the cards used for estimating.

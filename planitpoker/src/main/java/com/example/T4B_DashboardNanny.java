@@ -32,7 +32,7 @@ public class T4B_DashboardNanny {
             voteConfirmed = true;
             try {
                 double numericVote = convertVoteToNumber(currentVote);
-                T4B_Repository.addVote(numericVote);
+                T4B_Repository.getInstance().addVote(numericVote);
                 if(cardsPanel != null){
                     cardsPanel.lockSelection();
                 }
