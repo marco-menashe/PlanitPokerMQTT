@@ -1,5 +1,9 @@
 package com.example;
 
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+
+import javax.swing.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -47,10 +51,30 @@ public class T4B_StoriesNanny {
 	}
 
 	private void switchGUI() {
-		main.setTitle("dashboard");
-		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null); // FIX: pass null or real panel
+		main.setTitle("Dashboard");
+
+		// MQTT setup
+		T4B_Publisher publisher;
+		try {
+			publisher = new T4B_Publisher(MqttClient.generateClientId());
+		} catch (MqttException e) {
+			JOptionPane.showMessageDialog(main, "Publisher failed: " + e.getMessage());
+			return;
+		}
+
+		try {
+			new T4B_Subscriber(); // Automatically registers with Repository
+		} catch (MqttException e) {
+			JOptionPane.showMessageDialog(main, "Subscriber failed: " + e.getMessage());
+			return;
+		}
+
+		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null);
+		dashboardNanny.setPublisher(publisher);
+
 		T4B_DashboardPanel dashboardPanel = new T4B_DashboardPanel(dashboardNanny);
-		dashboardNanny.setCardsPanel(dashboardPanel.getCardsPanel()); // Link them correctly
+		dashboardNanny.setCardsPanel(dashboardPanel.getCardsPanel());
+
 		main.setContentPane(dashboardPanel);
 		main.setSize(800, 600);
 		main.setLocationRelativeTo(null);

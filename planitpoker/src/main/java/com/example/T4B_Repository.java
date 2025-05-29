@@ -65,7 +65,7 @@ public class T4B_Repository {
 		return name + "_" + System.currentTimeMillis();
 	}
 
-	private List<T4B_Player> getPlayers(){
+	public List<T4B_Player> getPlayers(){
 		return players;
 	}
 

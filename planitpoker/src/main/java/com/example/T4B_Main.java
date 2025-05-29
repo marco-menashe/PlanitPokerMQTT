@@ -7,7 +7,8 @@ import javax.swing.JFrame;
  *
  * @author AdrianSanchez
  *
- * /** */
+ *
+ */
 public class T4B_Main extends JFrame {
 
 	public T4B_Main() {

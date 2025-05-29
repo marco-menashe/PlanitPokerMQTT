@@ -13,20 +13,18 @@ public class T4B_LoginNanny {
 	}
 
 	public void enterRoom(String name) {
-		// add player once
 		T4B_Repository.getInstance().addName(name);
 		showCreateRoomScreen();
 	}
 
 	public void login(String name) {
-		// login can just call enterRoom
-		enterRoom(name);
+		enterRoom(name); // or merge into one method
 	}
 
 	private void showCreateRoomScreen() {
 		main.setTitle("Room");
-		T4B_CreateRoomNanny nanny = new T4B_CreateRoomNanny(main);
-		main.setContentPane(new T4B_CreateRoomPanel(nanny));
+		T4B_CreateRoomNanny createRoomNanny = new T4B_CreateRoomNanny(main);
+		main.setContentPane(new T4B_CreateRoomPanel(createRoomNanny));
 		main.setSize(500, 500);
 		main.revalidate();
 		main.repaint();
