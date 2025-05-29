@@ -71,10 +71,15 @@ public class T4B_StoriesNanny {
 
 		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null);
 		dashboardNanny.setPublisher(publisher);
+		// Set the current story title from the next available story
+		T4B_Story nextStory = T4B_Repository.getInstance().peekNextStory();
+		if (nextStory != null) {
+			dashboardNanny.setCurrentStoryTitle(nextStory.getTitle());
+		}
 
 		T4B_DashboardPanel dashboardPanel = new T4B_DashboardPanel(dashboardNanny);
 		dashboardNanny.setCardsPanel(dashboardPanel.getCardsPanel());
-
+		dashboardNanny.setDashboardPanel(dashboardPanel);
 		main.setContentPane(dashboardPanel);
 		main.setSize(800, 600);
 		main.setLocationRelativeTo(null);

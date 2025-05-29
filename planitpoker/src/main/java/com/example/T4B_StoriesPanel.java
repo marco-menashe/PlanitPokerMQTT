@@ -25,7 +25,7 @@ public class T4B_StoriesPanel extends JPanel {
 		titleLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(titleLabel, BorderLayout.NORTH);
 		
-		JTextArea storyTextArea = new JTextArea("Put your stories text here. Each line contains new story.");
+		JTextArea storyTextArea = new JTextArea("Story: Each line contains new story.");
 		JScrollPane scrollPane = new JScrollPane(storyTextArea);
 		add(scrollPane, BorderLayout.CENTER);
 		

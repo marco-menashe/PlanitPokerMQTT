@@ -1,13 +1,10 @@
 package com.example;
 
 import java.awt.*;
-
 import javax.swing.JPanel;
 
 /**
  * Integrates a dashboard with the cards, timer, and stories.
- *
- * @author javiergs
  */
 public class T4B_DashboardPanel extends JPanel {
     private T4B_SouthPanel southPanel;
@@ -23,9 +20,11 @@ public class T4B_DashboardPanel extends JPanel {
         add(cardsPanel, BorderLayout.CENTER);
         add(southPanel, BorderLayout.SOUTH);
         add(new T4B_WestPanel(dashboardNanny, this), BorderLayout.EAST);
+
+        dashboardNanny.setDashboardPanel(this);
     }
 
-    public void updateResults(){
+    public void updateResults() {
         southPanel.updateResults();
     }
 
@@ -38,5 +37,7 @@ public class T4B_DashboardPanel extends JPanel {
         return null;
     }
 
+    public T4B_SouthPanel getSouthPanel() {
+        return southPanel;
+    }
 }
-

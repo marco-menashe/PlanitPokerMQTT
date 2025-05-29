@@ -1,14 +1,11 @@
 package com.example;
 
-
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import javax.swing.*;
 
 /**
  * Controller responsible for managing the dashboard and its interactions.
- *
- * @author javiergs
  */
 public class T4B_DashboardNanny {
     private String currentVote;
@@ -16,9 +13,9 @@ public class T4B_DashboardNanny {
     private T4B_CardsPanel cardsPanel;
     private T4B_Publisher publisher;
 
-    public void setPublisher(T4B_Publisher publisher) {
-        this.publisher = publisher;
-    }
+    private String currentStoryTitle;
+
+    private T4B_DashboardPanel dashboardPanel;
 
     public T4B_DashboardNanny(T4B_CardsPanel cardsPanel) {
         this.cardsPanel = cardsPanel;
@@ -26,12 +23,24 @@ public class T4B_DashboardNanny {
         this.voteConfirmed = false;
     }
 
-    public void setCardsPanel(T4B_CardsPanel cardsPanel){
+    public void setPublisher(T4B_Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setCardsPanel(T4B_CardsPanel cardsPanel) {
         this.cardsPanel = cardsPanel;
     }
 
-    public void setCurrentVote(String vote){
-        if(!voteConfirmed){
+    public void setCurrentStoryTitle(String title) {
+        this.currentStoryTitle = title;
+    }
+
+    public void setDashboardPanel(T4B_DashboardPanel dashboardPanel) {
+        this.dashboardPanel = dashboardPanel;
+    }
+
+    public void setCurrentVote(String vote) {
+        if (!voteConfirmed) {
             currentVote = vote;
         }
     }
@@ -44,37 +53,45 @@ public class T4B_DashboardNanny {
                 T4B_Repository.getInstance().addVote(val);
 
                 if (publisher != null) {
+                    String title = T4B_Repository.getInstance().peekNextStory().getTitle();
                     publisher.publishVote(
                             T4B_Repository.getInstance().getPlayers().get(0).getName(),
-                            "CurrentStoryTitle", // eventually pull from current story
+                            title,
                             val
                     );
                 }
 
                 if (cardsPanel != null) cardsPanel.lockSelection();
 
+                int expectedVotes = T4B_Repository.getInstance().getPlayers().size();
+                if (T4B_Repository.getInstance().getCurrentVotes().size() >= expectedVotes) {
+                    double avg = T4B_Repository.calculateAverage();
+                    String currentTitle = T4B_Repository.getInstance().peekNextStory().getTitle();
+                    T4B_Repository.getInstance().completeCurrentStory(currentTitle, (int)Math.round(avg));
+                    T4B_Repository.getInstance().clearVotes();
+                }
+
             } catch (NumberFormatException | MqttException e) {
                 JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
             }
         }
     }
-
-    public void startNewVote(){
+    public void startNewVote() {
         voteConfirmed = false;
         currentVote = null;
-        if(cardsPanel != null){
+        if (cardsPanel != null) {
             cardsPanel.resetCards();
         }
     }
 
-    public boolean isVoteConfirmed(){
+    public boolean isVoteConfirmed() {
         return voteConfirmed;
     }
 
-    private double convertVoteToNumber(String vote) throws NumberFormatException{
-        return switch (vote){
+    private double convertVoteToNumber(String vote) throws NumberFormatException {
+        return switch (vote) {
             case "½" -> 0.5;
-            case "?" -> Double.NaN; //not sure what to do here, any number will affect avg score
+            case "?" -> Double.NaN;
             default -> Double.parseDouble(vote);
         };
     }

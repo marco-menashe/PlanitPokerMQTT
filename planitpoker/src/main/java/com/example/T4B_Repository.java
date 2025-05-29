@@ -2,10 +2,7 @@ package com.example;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 
 /**
@@ -46,6 +43,10 @@ public class T4B_Repository {
 		return instance;
 	}
 
+	public T4B_Story peekNextStory() {
+		return newStories.peek();
+	}
+
 	public void addCurrentRoom(String roomID){
 		this.roomID = roomID;
 		pcs.firePropertyChange("roomID", null, roomID);
@@ -74,21 +75,37 @@ public class T4B_Repository {
 		pcs.firePropertyChange("voteAdded", null, vote);
 	}
 
-	public static double calculateAverage(){
-		List<Double> votes = getInstance().currentVotes;
-		if (votes.isEmpty()) return 0.0;
+//	public static double calculateAverage(){
+//		List<Double> votes = getInstance().currentVotes;
+//		if (votes.isEmpty()) return 0.0;
+//		double total = 0;
+//		int count = 0;
+//
+//		for (double v : votes){
+//			if(!Double.isNaN(v)){
+//				total += v;
+//				count ++;
+//			}
+//		}
+//		return count == 0 ? 0 : total / count;
+//	}
+	public static double calculateAverage() {
+		List<T4B_Story> completed = getInstance().getPrevStories();
+		if (completed.isEmpty()) return 0.0;
+
 		double total = 0;
 		int count = 0;
 
-		for (double v : votes){
-			if(!Double.isNaN(v)){
-				total += v;
-				count ++;
+		for (T4B_Story s : completed) {
+			int score = s.getScore();
+			if (score > 0) {
+				total += score;
+				count++;
 			}
 		}
+
 		return count == 0 ? 0 : total / count;
 	}
-
 	public void clearVotes(){
 		currentVotes.clear();
 		pcs.firePropertyChange("votesCleared", null, null);
@@ -130,6 +147,28 @@ public class T4B_Repository {
 
 	public void fireCustomChange(String property, Object oldVal, Object newVal){
 		pcs.firePropertyChange(property, oldVal, newVal);
+	}
+	public void completeCurrentStory(String title, int finalScore) {
+		T4B_Story completedStory = null;
+
+		// Find the story in the newStories queue
+		for (T4B_Story story : newStories) {
+			if (story.getTitle().equals(title)) {
+				completedStory = story;
+				break;
+			}
+		}
+
+		if (completedStory != null) {
+			newStories.remove(completedStory); // Remove from active
+			completedStory.editScore(finalScore); // Update score
+			prevStories.add(completedStory); // Add to completed
+			pcs.firePropertyChange("storyCompleted", null, completedStory);
+		}
+	}
+
+	public List<Double> getCurrentVotes() {
+		return currentVotes;
 	}
 }
 
