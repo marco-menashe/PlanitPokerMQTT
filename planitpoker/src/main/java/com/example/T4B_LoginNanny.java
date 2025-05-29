@@ -1,7 +1,5 @@
 package com.example;
 
-
-
 /**
  * LoginNanny is responsible for handling the login process.
  *
@@ -17,6 +15,7 @@ public class T4B_LoginNanny {
 	
 	public void enterRoom(String name) {
 		System.out.println(name + " Entering a room...");
+		T4B_Repository.getInstance().addName(name);
 		login (name);
 		switchGUI();
 	}

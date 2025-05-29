@@ -59,6 +59,7 @@ public class T4B_SouthPanel extends JPanel {
 		// Add tabs
 		storyTabs.addTab("Active Stories", activeScrollPane);
 		storyTabs.addTab("Completed Stories", completedScrollPane);
+		storyTabs.addTab("Results", resultsPanel);
 
 		add(storyTabs, BorderLayout.CENTER);
 	}

@@ -28,6 +28,7 @@ public class T4B_DashboardPanel extends JPanel {
     public void updateResults(){
         southPanel.updateResults();
     }
+
     public T4B_CardsPanel getCardsPanel() {
         for (Component comp : getComponents()) {
             if (comp instanceof T4B_CardsPanel) {

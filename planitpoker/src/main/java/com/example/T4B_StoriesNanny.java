@@ -19,7 +19,7 @@ public class T4B_StoriesNanny {
 
 	public void saveAndAddNew(String text) {
 		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // New story, no score yet
-		switchGUI();
+		//switchGUI();
 	}
 
 	public void saveAndClose(String text) {
@@ -29,8 +29,9 @@ public class T4B_StoriesNanny {
 
 	public void importStories() {
 		// Optional: Load from file or simulate sample stories
-		T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 1", 0));
-		T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 2", 0));
+		//T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 1", 0));
+		//T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 2", 0));
+		switchGUI();
 	}
 
 	public LinkedList<T4B_Story> getPrevStories() {
