@@ -4,23 +4,23 @@ package com.example;
 /**
  * Act as a controller for the CreateRoomPanel.
  *
- * @author javiergs
+ * @author
  */
 public class T4B_CreateRoomNanny {
-	
+
 	private T4B_Main main;
-	
+
 	public T4B_CreateRoomNanny(T4B_Main main) {
 		this.main = main;
 	}
-	
+
 	public void createRoom(String name, String selectedItem) {
 		System.out.println(" Creating room..." + name + ", mode: " + selectedItem);
 		T4B_Repository.getInstance().addCurrentRoom(name);
 		T4B_Repository.getInstance().addCurrentMode(selectedItem);
 		switchGUI();
 	}
-	
+
 	private void switchGUI() {
 		main.setTitle("Stories");
 		T4B_StoriesNanny createRoomNanny = new T4B_StoriesNanny(main);
@@ -30,6 +30,5 @@ public class T4B_CreateRoomNanny {
 		main.revalidate();
 		main.repaint();
 	}
-	
-}
 
+}

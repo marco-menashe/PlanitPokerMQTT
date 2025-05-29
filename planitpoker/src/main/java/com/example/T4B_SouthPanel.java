@@ -82,17 +82,22 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 		}
 	}
 
+	public void resetAverage() {
+		resultLabel.setText("Average: -");
+	}
+
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-			case "voteAdded":
-				updateResults();
-				break;
+//			case "voteAdded":
+//				updateResults();
+//				break;
 			case "storyCompleted":
 			case "storyAdded":
 				refreshStoryLists();
 				break;
 		}
+
 	}
 }

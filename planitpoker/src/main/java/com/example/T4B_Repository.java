@@ -75,7 +75,7 @@ public class T4B_Repository {
 		pcs.firePropertyChange("voteAdded", null, vote);
 	}
 
-//	public static double calculateAverage(){
+	//	public static double calculateAverage(){
 //		List<Double> votes = getInstance().currentVotes;
 //		if (votes.isEmpty()) return 0.0;
 //		double total = 0;
@@ -90,21 +90,17 @@ public class T4B_Repository {
 //		return count == 0 ? 0 : total / count;
 //	}
 	public static double calculateAverage() {
-		List<T4B_Story> completed = getInstance().getPrevStories();
-		if (completed.isEmpty()) return 0.0;
-
-		double total = 0;
+		List<Double> votes = getInstance().getCurrentVotes();
+		if (votes.isEmpty()) return Double.NaN;
+		double sum = 0;
 		int count = 0;
-
-		for (T4B_Story s : completed) {
-			int score = s.getScore();
-			if (score > 0) {
-				total += score;
+		for (Double v : votes) {
+			if (v != null && !Double.isNaN(v)) {
+				sum += v;
 				count++;
 			}
 		}
-
-		return count == 0 ? 0 : total / count;
+		return count == 0 ? Double.NaN : sum / count;
 	}
 	public void clearVotes(){
 		currentVotes.clear();
@@ -171,4 +167,3 @@ public class T4B_Repository {
 		return currentVotes;
 	}
 }
-

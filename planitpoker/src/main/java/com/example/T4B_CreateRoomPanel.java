@@ -11,10 +11,10 @@ import javax.swing.SwingConstants;
 /**
  * Creating a new room.
  *
- * @author javiergs
+ * @author
  */
 public class T4B_CreateRoomPanel extends JPanel {
-	
+
 	public T4B_CreateRoomPanel(T4B_CreateRoomNanny createRoomNanny) {
 		setLayout(new GridLayout(4, 1));
 		JLabel title = new JLabel("Create new Room");
@@ -40,9 +40,8 @@ public class T4B_CreateRoomPanel extends JPanel {
 		box3.add(createButton);
 		add(box3);
 		createButton.addActionListener(e ->
-			createRoomNanny.createRoom(nameField.getText(), (String) comboBox.getSelectedItem())
+				createRoomNanny.createRoom(nameField.getText(), (String) comboBox.getSelectedItem())
 		);
 	}
-	
-}
 
+}

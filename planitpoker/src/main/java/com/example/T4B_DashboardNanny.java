@@ -3,6 +3,7 @@ package com.example;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import javax.swing.*;
+import java.util.*;
 
 /**
  * Controller responsible for managing the dashboard and its interactions.
@@ -40,48 +41,69 @@ public class T4B_DashboardNanny {
     }
 
     public void setCurrentVote(String vote) {
-        if (!voteConfirmed) {
-            currentVote = vote;
-        }
+        if (!voteConfirmed) this.currentVote = vote;
     }
 
     public void confirmVote() {
-        if (currentVote != null) {
-            voteConfirmed = true;
-            try {
-                double val = convertVoteToNumber(currentVote);
-                T4B_Repository.getInstance().addVote(val);
+        if (voteConfirmed) return;
+        if (currentVote == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a card first.");
+            return;
+        }
+        if (currentStoryTitle == null) {
+            JOptionPane.showMessageDialog(null,
+                    "No active story to vote on.");
+            return;
+        }
 
-                if (publisher != null) {
-                    String title = T4B_Repository.getInstance().peekNextStory().getTitle();
-                    publisher.publishVote(
-                            T4B_Repository.getInstance().getPlayers().get(0).getName(),
-                            title,
-                            val
-                    );
-                }
+        try {
+            double val = convertVoteToNumber(currentVote);
+            T4B_Repository.getInstance().addVote(val);
+            System.out.println("DEBUG: votes now = " +
+                    T4B_Repository.getInstance().getCurrentVotes().size());
 
-                if (cardsPanel != null) cardsPanel.lockSelection();
-
-                int expectedVotes = T4B_Repository.getInstance().getPlayers().size();
-                if (T4B_Repository.getInstance().getCurrentVotes().size() >= expectedVotes) {
-                    double avg = T4B_Repository.calculateAverage();
-                    String currentTitle = T4B_Repository.getInstance().peekNextStory().getTitle();
-                    T4B_Repository.getInstance().completeCurrentStory(currentTitle, (int)Math.round(avg));
-                    T4B_Repository.getInstance().clearVotes();
-                }
-
-            } catch (NumberFormatException | MqttException e) {
-                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
+            if (publisher != null) {
+                publisher.publishVote(
+                        T4B_Repository.getInstance().getPlayers().get(0).getName(),
+                        currentStoryTitle, val);
             }
+
+            voteConfirmed = true;
+            if (cardsPanel != null) cardsPanel.lockSelection();
+
+        } catch (NumberFormatException | MqttException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error recording vote: " + e.getMessage());
         }
     }
+
+    public void showResults() {
+        List<Double> votes = T4B_Repository.getInstance().getCurrentVotes();
+        System.out.println("DEBUG: showResults sees votes = " + votes.size());
+        if (votes.isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "No votes cast this round.");
+            return;
+        }
+
+        double avg = T4B_Repository.calculateAverage();
+        dashboardPanel.updateResults();
+        T4B_Repository.getInstance()
+                .completeCurrentStory(currentStoryTitle, (int)Math.round(avg));
+    }
+
     public void startNewVote() {
+        T4B_Repository.getInstance().clearVotes();
         voteConfirmed = false;
         currentVote = null;
-        if (cardsPanel != null) {
-            cardsPanel.resetCards();
-        }
+
+        if (cardsPanel != null) cardsPanel.resetCards();
+        if (dashboardPanel != null)
+            dashboardPanel.getSouthPanel().resetAverage();
+
+        T4B_Story next = T4B_Repository.getInstance().peekNextStory();
+        currentStoryTitle = (next != null ? next.getTitle() : null);
     }
 
     public boolean isVoteConfirmed() {

@@ -31,4 +31,3 @@ public class T4B_Main extends JFrame {
 		new T4B_Main().setVisible(true);
 	}
 }
-

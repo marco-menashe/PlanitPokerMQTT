@@ -3,7 +3,7 @@ package com.example;
 /**
  * LoginNanny is responsible for handling the login process.
  *
- * @author javiergs
+ * @author
  */
 public class T4B_LoginNanny {
 	private final T4B_Main main;

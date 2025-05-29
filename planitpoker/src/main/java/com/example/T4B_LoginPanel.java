@@ -11,10 +11,10 @@ import javax.swing.SwingConstants;
 /**
  * Create a panel for user login.
  *
- * @author javiergs
+ * @author
  */
 public class T4B_LoginPanel extends JPanel {
-	
+
 	public T4B_LoginPanel(T4B_LoginNanny joinRoomNanny) {
 		JLabel titleLabel = new JLabel("Let's start!");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -25,7 +25,7 @@ public class T4B_LoginPanel extends JPanel {
 		JTextField nameField = new JTextField("Enter your name");
 		JButton enterButton = new JButton("Enter");
 		JButton loginButton = new JButton("Login");
-		
+
 		setLayout(new GridLayout(6, 1));
 		add(titleLabel);
 		add(subtitleLabel);
@@ -33,10 +33,9 @@ public class T4B_LoginPanel extends JPanel {
 		add(enterButton);
 		add(accountLabel);
 		add(loginButton);
-		
+
 		enterButton.addActionListener(e -> joinRoomNanny.enterRoom(nameField.getText()));
 		loginButton.addActionListener(e -> joinRoomNanny.login(nameField.getText()));
 	}
-	
-}
 
+}

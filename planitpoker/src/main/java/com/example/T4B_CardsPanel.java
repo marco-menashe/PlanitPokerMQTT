@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * Panel that displays the cards used for estimating.
  *
- * @author javiergs
+ * @author
  */
 public class T4B_CardsPanel extends JPanel {
     private static final String[] CARD_VALUES = {
@@ -97,4 +97,3 @@ public class T4B_CardsPanel extends JPanel {
         }
     }
 }
-

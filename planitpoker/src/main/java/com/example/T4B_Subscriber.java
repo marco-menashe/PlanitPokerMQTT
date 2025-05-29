@@ -50,15 +50,17 @@ public class T4B_Subscriber implements MqttCallback {
                 String username = parts[0];
                 String storyTitle = parts[1];
                 double voteValue = Double.parseDouble(parts[2]);
+//                System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
+//                T4B_Repository.getInstance().addVote(voteValue);
+//
+//                int expectedVotes = T4B_Repository.getInstance().getPlayers().size();
+//                if (T4B_Repository.getInstance().getCurrentVotes().size() >= expectedVotes) {
+//                    int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
+//                    T4B_Repository.getInstance().completeCurrentStory(storyTitle, finalScore);
+//                    T4B_Repository.getInstance().clearVotes();
+//                }
                 System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
                 T4B_Repository.getInstance().addVote(voteValue);
-
-                int expectedVotes = T4B_Repository.getInstance().getPlayers().size();
-                if (T4B_Repository.getInstance().getCurrentVotes().size() >= expectedVotes) {
-                    int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
-                    T4B_Repository.getInstance().completeCurrentStory(storyTitle, finalScore);
-                    T4B_Repository.getInstance().clearVotes();
-                }
             }
         }
     }

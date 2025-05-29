@@ -14,21 +14,21 @@ import javax.swing.SwingConstants;
 /**
  * Allows the user to create a new story.
  *
- * @author javiergs
+ * @author
  */
 public class T4B_StoriesPanel extends JPanel {
-	
+
 	public T4B_StoriesPanel(T4B_StoriesNanny storiesNanny) {
 		setLayout(new BorderLayout());
-		
+
 		JLabel titleLabel = new JLabel("Create New Story", SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Arial", Font.PLAIN, 20));
 		add(titleLabel, BorderLayout.NORTH);
-		
+
 		JTextArea storyTextArea = new JTextArea("Story: Each line contains new story.");
 		JScrollPane scrollPane = new JScrollPane(storyTextArea);
 		add(scrollPane, BorderLayout.CENTER);
-		
+
 		JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
 		JButton saveAddNewButton = new JButton("Save & Add New");
 		JButton saveCloseButton = new JButton("Save & Close");
@@ -39,13 +39,11 @@ public class T4B_StoriesPanel extends JPanel {
 		buttonPanel.add(importButton);
 		buttonPanel.add(cancelButton);
 		add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		saveAddNewButton.addActionListener(e -> storiesNanny.saveAndAddNew(storyTextArea.getText()));
 		saveCloseButton.addActionListener(e -> storiesNanny.saveAndClose(storyTextArea.getText()));
 		importButton.addActionListener(e -> storiesNanny.importStories());
 		cancelButton.addActionListener(e -> storiesNanny.cancel());
 	}
-	
+
 }
-
-
