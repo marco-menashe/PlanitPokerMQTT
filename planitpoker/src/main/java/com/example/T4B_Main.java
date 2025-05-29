@@ -19,8 +19,6 @@ public class T4B_Main extends JFrame {
 		T4B_LoginNanny loginNanny = new T4B_LoginNanny(this);
 		setContentPane(new T4B_LoginPanel(loginNanny));
 
-		T4B_LoginPanel loginPanel = new T4B_LoginPanel(loginNanny);
-		//add(loginPanel);
 
 		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null);
 		T4B_CardsPanel cardsPanel = new T4B_CardsPanel(dashboardNanny);
