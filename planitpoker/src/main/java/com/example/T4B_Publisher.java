@@ -49,5 +49,10 @@ public class T4B_Publisher {
         MqttMessage message = new MqttMessage(username.getBytes());
         client.publish("planitpoker/join", message);
     }
+    public void publishCompletedStory(String storyTitle, int finalScore) throws MqttException {
+        String payload = storyTitle + "|" + finalScore;
+        MqttMessage message = new MqttMessage(payload.getBytes());
+        client.publish("planitpoker/stories", message);
+    }
 
 }

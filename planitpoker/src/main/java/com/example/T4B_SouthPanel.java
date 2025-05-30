@@ -5,7 +5,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import javax.swing.*;
 
 /**
@@ -15,47 +14,56 @@ import javax.swing.*;
 public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 
 	private JLabel resultLabel;
+	private JLabel currentStoryLabel;
 	private JTextArea activeStories;
 	private JTextArea completedStories;
 
 	public T4B_SouthPanel() {
 		setBackground(new Color(161, 190, 239));
 		setLayout(new BorderLayout());
+
 		JTabbedPane storyTabs = new JTabbedPane();
 
-		// Add average vote label
-		JPanel resultsPanel = new JPanel();
-		resultLabel = new JLabel("Average: -");
-		resultsPanel.add(resultLabel);
-		add(resultsPanel, BorderLayout.NORTH);
+		// --- Current story label ---
+		currentStoryLabel = new JLabel("Current Story: None");
+		currentStoryLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		currentStoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		// Active stories
+		// --- Result label ---
+		resultLabel = new JLabel("Average: -");
+		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+		JPanel topPanel = new JPanel(new GridLayout(2, 1));
+		topPanel.add(currentStoryLabel);
+		topPanel.add(resultLabel);
+		add(topPanel, BorderLayout.NORTH);
+
+		// --- Active stories ---
 		activeStories = new JTextArea();
 		activeStories.setEditable(false);
 		JScrollPane activeScrollPane = new JScrollPane(activeStories);
 		activeScrollPane.setPreferredSize(new Dimension(400, 150));
 
-		// Completed stories
+		// --- Completed stories ---
 		completedStories = new JTextArea();
 		completedStories.setEditable(false);
 		JScrollPane completedScrollPane = new JScrollPane(completedStories);
 		completedScrollPane.setPreferredSize(new Dimension(400, 150));
 
-		// Add tabs
+		// --- Tabs ---
 		storyTabs.addTab("Active Stories", activeScrollPane);
 		storyTabs.addTab("Completed Stories", completedScrollPane);
-		storyTabs.addTab("Results", resultsPanel);
 
 		add(storyTabs, BorderLayout.CENTER);
 
-		// Listen for changes in the repository
+		// Register for repository updates
 		T4B_Repository.getInstance().addPropertyChangeListener(this);
 
 		// Initial content
 		refreshStoryLists();
 	}
 
-
+	// Updates both active and completed story text areas
 	public void refreshStoryLists() {
 		StringBuilder activeText = new StringBuilder();
 		Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
@@ -72,7 +80,6 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 		completedStories.setText(completedText.toString());
 	}
 
-
 	public void updateResults() {
 		double average = T4B_Repository.calculateAverage();
 		if (Double.isNaN(average)) {
@@ -86,18 +93,18 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 		resultLabel.setText("Average: -");
 	}
 
+	// This can be called from DashboardNanny to display current story
+	public void updateCurrentStory(String title) {
+		currentStoryLabel.setText("Current Story: " + (title != null ? title : "None"));
+	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
-//			case "voteAdded":
-//				updateResults();
-//				break;
 			case "storyCompleted":
 			case "storyAdded":
 				refreshStoryLists();
 				break;
 		}
-
 	}
 }

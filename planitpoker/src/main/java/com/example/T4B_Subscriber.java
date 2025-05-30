@@ -62,7 +62,17 @@ public class T4B_Subscriber implements MqttCallback {
                 int expectedVotes = repository.getPlayers().size();
                 if (repository.getCurrentVotes().size() >= expectedVotes) {
                     int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
-                    repository.completeCurrentStory(storyTitle, finalScore);
+                    T4B_Story current = repository.getCurrentStory();
+                    if (current != null && current.getTitle().equals(storyTitle)) {
+                        repository.completeCurrentStory(storyTitle, finalScore);
+                        try {
+                            repository.getPublisher().publishCompletedStory(storyTitle, finalScore);
+                        } catch (Exception e) {
+                            System.out.println("Failed to publish completed story: " + e.getMessage());
+                        }
+                        repository.setCurrentStory(null);
+                        repository.clearVotes();
+                    }
                     repository.clearVotes();
                 }
             }
@@ -70,14 +80,17 @@ public class T4B_Subscriber implements MqttCallback {
             String username = new String(message.getPayload());
             System.out.println("Player joined: " + username);
             T4B_Repository.getInstance().addName(username, false);
-        }else if (topic.equals("planitpoker/stories")) {
+        } else if (topic.equals("planitpoker/stories")) {
             String[] parts = payload.split("\\|", 2);
             if (parts.length == 2) {
                 String title = parts[0];
                 int score = Integer.parseInt(parts[1]);
-                T4B_Repository.getInstance().addStory(new T4B_Story(title, score));
+                T4B_Story story = new T4B_Story(title, score);
+                repository.addStory(story);
+                repository.setCurrentStory(story);
             }
         }
+
 
 
     }

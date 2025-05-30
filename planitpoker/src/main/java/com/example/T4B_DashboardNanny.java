@@ -34,6 +34,11 @@ public class T4B_DashboardNanny {
 
     public void setCurrentStoryTitle(String title) {
         this.currentStoryTitle = title;
+
+        // Notify SouthPanel to update the current story label
+        if (dashboardPanel != null && dashboardPanel.getSouthPanel() != null) {
+            dashboardPanel.getSouthPanel().updateCurrentStory(title);
+        }
     }
 
     public void setDashboardPanel(T4B_DashboardPanel dashboardPanel) {
@@ -89,8 +94,8 @@ public class T4B_DashboardNanny {
 
         double avg = T4B_Repository.calculateAverage();
         dashboardPanel.updateResults();
-        T4B_Repository.getInstance()
-                .completeCurrentStory(currentStoryTitle, (int)Math.round(avg));
+        JOptionPane.showMessageDialog(null, "Average vote: " + avg);
+        // No longer finalizing the story here – that’s handled by subscriber
     }
 
     public void startNewVote() {
@@ -104,7 +109,13 @@ public class T4B_DashboardNanny {
 
         T4B_Story next = T4B_Repository.getInstance().peekNextStory();
         currentStoryTitle = (next != null ? next.getTitle() : null);
+
+        // ⬇ Notify SouthPanel of the new current story
+        if (dashboardPanel != null && dashboardPanel.getSouthPanel() != null) {
+            dashboardPanel.getSouthPanel().updateCurrentStory(currentStoryTitle);
+        }
     }
+
 
     public boolean isVoteConfirmed() {
         return voteConfirmed;
@@ -124,5 +135,4 @@ public class T4B_DashboardNanny {
             }
         };
     }
-
 }

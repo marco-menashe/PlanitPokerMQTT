@@ -105,10 +105,10 @@ public class T4B_StoriesNanny {
 		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null);
 		dashboardNanny.setPublisher(publisher);
 
-		// Set current story title
-		T4B_Story nextStory = T4B_Repository.getInstance().peekNextStory();
-		if (nextStory != null) {
-			dashboardNanny.setCurrentStoryTitle(nextStory.getTitle());
+		// Set current story title from repository's shared currentStory
+		T4B_Story currentStory = T4B_Repository.getInstance().getCurrentStory();
+		if (currentStory != null) {
+			dashboardNanny.setCurrentStoryTitle(currentStory.getTitle());
 		}
 
 		T4B_DashboardPanel dashboardPanel = new T4B_DashboardPanel(dashboardNanny);
