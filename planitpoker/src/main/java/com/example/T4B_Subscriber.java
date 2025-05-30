@@ -34,33 +34,31 @@ public class T4B_Subscriber implements MqttCallback {
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         String payload = new String(message.getPayload());
+
         if (topic.equals("planitpoker/chat")) {
-            // Example: payload = "username|Hello world!"
             String[] parts = payload.split("\\|", 2);
             if (parts.length == 2) {
                 String username = parts[0];
                 String chatText = parts[1];
                 System.out.println("Chat from " + username + ": " + chatText);
-                T4B_Repository.getInstance().newChatMessage(username, chatText);
+                repository.newChatMessage(username, chatText);
             }
+
         } else if (topic.equals("planitpoker/votes")) {
-            // Example: payload = "username|Story Title|5.0"
             String[] parts = payload.split("\\|", 3);
             if (parts.length == 3) {
                 String username = parts[0];
                 String storyTitle = parts[1];
                 double voteValue = Double.parseDouble(parts[2]);
-//                System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
-//                T4B_Repository.getInstance().addVote(voteValue);
-//
-//                int expectedVotes = T4B_Repository.getInstance().getPlayers().size();
-//                if (T4B_Repository.getInstance().getCurrentVotes().size() >= expectedVotes) {
-//                    int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
-//                    T4B_Repository.getInstance().completeCurrentStory(storyTitle, finalScore);
-//                    T4B_Repository.getInstance().clearVotes();
-//                }
                 System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
-                T4B_Repository.getInstance().addVote(voteValue);
+                repository.addVote(voteValue);
+
+                int expectedVotes = repository.getPlayers().size();
+                if (repository.getCurrentVotes().size() >= expectedVotes) {
+                    int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
+                    repository.completeCurrentStory(storyTitle, finalScore);
+                    repository.clearVotes();
+                }
             }
         }
     }

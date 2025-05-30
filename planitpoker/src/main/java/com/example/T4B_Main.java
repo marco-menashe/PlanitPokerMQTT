@@ -23,11 +23,6 @@ public class T4B_Main extends JFrame {
 	}
 
 	public static void main(String[] args) {
-//		T4B_Main main = new T4B_Main();
-//		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		main.setSize(400, 400);
-//		main.setLocationRelativeTo(null);
-//		main.setVisible(true);
 		new T4B_Main().setVisible(true);
 	}
 }

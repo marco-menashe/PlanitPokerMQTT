@@ -114,7 +114,15 @@ public class T4B_DashboardNanny {
         return switch (vote) {
             case "½" -> 0.5;
             case "?" -> Double.NaN;
-            default -> Double.parseDouble(vote);
+            default -> {
+                try {
+                    yield Double.parseDouble(vote);
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Invalid vote input: " + vote);
+                    throw e;
+                }
+            }
         };
     }
+
 }

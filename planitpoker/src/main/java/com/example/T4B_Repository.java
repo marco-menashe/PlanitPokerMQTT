@@ -57,11 +57,18 @@ public class T4B_Repository {
 		pcs.firePropertyChange("mode", null, mode);
 	}
 
-	public void addName(String name){
+	public void addName(String name) {
+		for (T4B_Player player : players) {
+			if (player.getName().equalsIgnoreCase(name)) {
+				System.out.println("Duplicate player name: " + name);
+				return; // or throw an exception / show UI message
+			}
+		}
 		T4B_Player player = new T4B_Player(name, generatePlayerID(name));
 		players.add(player);
 		pcs.firePropertyChange("playerAdded", null, player);
 	}
+
 	private String generatePlayerID(String name){
 		return name + "_" + System.currentTimeMillis();
 	}
@@ -75,20 +82,7 @@ public class T4B_Repository {
 		pcs.firePropertyChange("voteAdded", null, vote);
 	}
 
-	//	public static double calculateAverage(){
-//		List<Double> votes = getInstance().currentVotes;
-//		if (votes.isEmpty()) return 0.0;
-//		double total = 0;
-//		int count = 0;
-//
-//		for (double v : votes){
-//			if(!Double.isNaN(v)){
-//				total += v;
-//				count ++;
-//			}
-//		}
-//		return count == 0 ? 0 : total / count;
-//	}
+
 	public static double calculateAverage() {
 		List<Double> votes = getInstance().getCurrentVotes();
 		if (votes.isEmpty()) return Double.NaN;
