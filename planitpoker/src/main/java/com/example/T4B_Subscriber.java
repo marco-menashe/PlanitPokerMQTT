@@ -71,7 +71,6 @@ public class T4B_Subscriber implements MqttCallback {
                             System.out.println("Failed to publish completed story: " + e.getMessage());
                         }
                         repository.setCurrentStory(null);
-                        repository.clearVotes();
                     }
                     repository.clearVotes();
                 }

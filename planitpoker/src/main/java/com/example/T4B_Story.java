@@ -25,6 +25,18 @@ public class T4B_Story {
     public void editScore(int score) { this.score = score; }
 
     public void editTitle(String title) { this.title = title; }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        T4B_Story story = (T4B_Story) obj;
+        return title.equals(story.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return title.hashCode();
+    }
 
 
 

@@ -10,6 +10,8 @@ import javax.swing.*;
 /**
  * Stories organized in tabs.
  * The first tab contains the active stories, and the second one contains the completed stories.
+ *
+ * @author adriansanchez
  */
 public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 
@@ -102,6 +104,10 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch (evt.getPropertyName()) {
 			case "storyCompleted":
+			case "currentStorySet":
+				currentStoryLabel.setText("Current Story: " +
+						(evt.getNewValue() != null ? ((T4B_Story) evt.getNewValue()).getTitle() : "None"));
+				break;
 			case "storyAdded":
 				refreshStoryLists();
 				break;

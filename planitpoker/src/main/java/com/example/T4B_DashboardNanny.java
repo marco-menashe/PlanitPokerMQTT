@@ -7,6 +7,8 @@ import java.util.*;
 
 /**
  * Controller responsible for managing the dashboard and its interactions.
+ *
+ * @author adriansanchez
  */
 public class T4B_DashboardNanny {
     private String currentVote;
@@ -51,6 +53,8 @@ public class T4B_DashboardNanny {
 
     public void confirmVote() {
         if (voteConfirmed) return;
+        voteConfirmed = true;
+
         if (currentVote == null) {
             JOptionPane.showMessageDialog(null, "Please select a card first.");
             return;
