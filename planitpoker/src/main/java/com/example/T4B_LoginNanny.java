@@ -13,7 +13,7 @@ public class T4B_LoginNanny {
 	}
 
 	public void enterRoom(String name) {
-		T4B_Repository.getInstance().addName(name);
+		T4B_Repository.getInstance().addName(name, false);
 		showCreateRoomScreen();
 	}
 

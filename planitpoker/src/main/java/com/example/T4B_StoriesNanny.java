@@ -62,6 +62,9 @@ public class T4B_StoriesNanny {
 			return;
 		}
 
+		T4B_Repository.getInstance().setPublisher(publisher);
+
+
 		try {
 			new T4B_Subscriber(); // Automatically registers with Repository
 		} catch (MqttException e) {

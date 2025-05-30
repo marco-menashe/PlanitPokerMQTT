@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 public class T4B_DashboardPanel extends JPanel {
     private T4B_SouthPanel southPanel;
 
+    private T4B_ChatPanel chatPanel;
+
     public T4B_DashboardPanel(T4B_DashboardNanny dashboardNanny) {
         setLayout(new BorderLayout());
 
@@ -22,6 +24,13 @@ public class T4B_DashboardPanel extends JPanel {
         add(new T4B_WestPanel(dashboardNanny, this), BorderLayout.EAST);
 
         dashboardNanny.setDashboardPanel(this);
+        String playerName = T4B_Repository.getInstance().getPlayers().get(0).getName();
+        chatPanel = new T4B_ChatPanel(
+                T4B_Repository.getInstance().getPublisher(),
+                playerName
+        );
+        add(chatPanel, BorderLayout.WEST);
+
     }
 
     public void updateResults() {

@@ -45,4 +45,9 @@ public class T4B_Publisher {
     public void disconnect() throws MqttException {
         client.disconnect();
     }
+    public void publishPlayerJoin(String username) throws MqttException {
+        MqttMessage message = new MqttMessage(username.getBytes());
+        client.publish("planitpoker/join", message);
+    }
+
 }

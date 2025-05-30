@@ -19,6 +19,7 @@ public class T4B_Repository {
 
 	private String roomID;
 	private String mode;
+	private T4B_Publisher publisher;
 
 	private final List<T4B_Player> players;
 	private final List<String> chatMessages;
@@ -57,17 +58,33 @@ public class T4B_Repository {
 		pcs.firePropertyChange("mode", null, mode);
 	}
 
-	public void addName(String name) {
+	public void addName(String name, boolean shouldBroadcast) {
 		for (T4B_Player player : players) {
 			if (player.getName().equalsIgnoreCase(name)) {
-				System.out.println("Duplicate player name: " + name);
-				return; // or throw an exception / show UI message
+				return;
 			}
 		}
 		T4B_Player player = new T4B_Player(name, generatePlayerID(name));
 		players.add(player);
 		pcs.firePropertyChange("playerAdded", null, player);
+
+		if (shouldBroadcast && publisher != null) {
+			try {
+				publisher.publishPlayerJoin(player.getName());
+			} catch (Exception e) {
+				System.out.println("Failed to broadcast join: " + e.getMessage());
+			}
+		}
 	}
+
+	public void setPublisher(T4B_Publisher publisher) {
+		this.publisher = publisher;
+	}
+
+	public T4B_Publisher getPublisher() {
+		return publisher;
+	}
+
 
 	private String generatePlayerID(String name){
 		return name + "_" + System.currentTimeMillis();

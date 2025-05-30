@@ -24,6 +24,8 @@ public class T4B_Subscriber implements MqttCallback {
         client.subscribe("planitpoker/chat");
         client.subscribe("planitpoker/votes");
         client.subscribe("planitpoker/stories");
+        client.subscribe("planitpoker/join");
+
     }
 
     @Override
@@ -60,7 +62,12 @@ public class T4B_Subscriber implements MqttCallback {
                     repository.clearVotes();
                 }
             }
+        } else if (topic.equals("planitpoker/join")) {
+            String username = new String(message.getPayload());
+            System.out.println("Player joined: " + username);
+            T4B_Repository.getInstance().addName(username, false);
         }
+
     }
 
     public void disconnect() throws MqttException {
