@@ -6,7 +6,14 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+/**
+ * The {@code T4B_ChatPanel} class represents a chat interface.
 
+ * <p>This class listens for new chat messages via a property change listener on the shared {@link T4B_Repository}.
+ * Messages are published through a {@link T4B_Publisher} instance.
+ *
+ * @author Adrian Sanchez
+ */
 public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
 
     private JTextArea chatArea;

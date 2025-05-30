@@ -2,6 +2,9 @@ package com.example;
 
 import org.eclipse.paho.client.mqttv3.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Subscriber class that listens for story updates from the MQTT broker.
  * It processes incoming messages and updates the repository accordingly.
@@ -15,6 +18,7 @@ public class T4B_Subscriber implements MqttCallback {
     private MqttClient client;
 
     private T4B_Repository repository = T4B_Repository.getInstance();
+
 
     public T4B_Subscriber() throws MqttException {
         client = new MqttClient(broker, MqttClient.generateClientId());
@@ -53,7 +57,7 @@ public class T4B_Subscriber implements MqttCallback {
                 String storyTitle = parts[1];
                 double voteValue = Double.parseDouble(parts[2]);
                 System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
-                repository.addVote(voteValue);
+                repository.addVote(username, voteValue);
 
                 int expectedVotes = repository.getPlayers().size();
                 if (repository.getCurrentVotes().size() >= expectedVotes) {
@@ -66,7 +70,15 @@ public class T4B_Subscriber implements MqttCallback {
             String username = new String(message.getPayload());
             System.out.println("Player joined: " + username);
             T4B_Repository.getInstance().addName(username, false);
+        }else if (topic.equals("planitpoker/stories")) {
+            String[] parts = payload.split("\\|", 2);
+            if (parts.length == 2) {
+                String title = parts[0];
+                int score = Integer.parseInt(parts[1]);
+                T4B_Repository.getInstance().addStory(new T4B_Story(title, score));
+            }
         }
+
 
     }
 

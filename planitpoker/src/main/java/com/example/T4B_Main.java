@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 /**
  * Main class to create a JFrame and display the login panel.
  *
- * @author AdrianSanchez
+ * @author AdrcianSanchez
  *
  *
  */

@@ -22,19 +22,41 @@ public class T4B_StoriesNanny {
 	}
 
 	public void saveAndAddNew(String text) {
-		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // New story, no score yet
-		//switchGUI();
+		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // Save locally
+
+		T4B_Publisher publisher = T4B_Repository.getInstance().getPublisher();
+		if (publisher == null) {
+			try {
+				publisher = new T4B_Publisher(MqttClient.generateClientId());
+				T4B_Repository.getInstance().setPublisher(publisher);
+			} catch (Exception e) {
+				System.out.println("Failed to initialize publisher: " + e.getMessage());
+				return;
+			}
+		}
+
+		try {
+			publisher.publishStory(text, 0);
+		} catch (Exception e) {
+			System.out.println("Failed to publish story: " + e.getMessage());
+		}
 	}
 
+
+
 	public void saveAndClose(String text) {
-		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // Same here
+		T4B_Story story = new T4B_Story(text, 0);
+		T4B_Repository.getInstance().addStory(story);
+		try {
+			T4B_Repository.getInstance().getPublisher().publishStory(text, 0);
+		} catch (MqttException e) {
+			System.out.println("Failed to publish story: " + e.getMessage());
+		}
 		switchGUI();
 	}
 
+
 	public void importStories() {
-		// Optional: Load from file or simulate sample stories
-		//T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 1", 0));
-		//T4B_Repository.getInstance().addStory(new T4B_Story("Imported Story 2", 0));
 		switchGUI();
 	}
 
@@ -64,7 +86,6 @@ public class T4B_StoriesNanny {
 
 		T4B_Repository.getInstance().setPublisher(publisher);
 
-
 		try {
 			new T4B_Subscriber(); // Automatically registers with Repository
 		} catch (MqttException e) {
@@ -72,9 +93,19 @@ public class T4B_StoriesNanny {
 			return;
 		}
 
+		String username = T4B_Repository.getInstance().getPlayers().isEmpty()
+				? "Player" + System.currentTimeMillis()
+				: T4B_Repository.getInstance().getPlayers().get(0).getName();
+		try {
+			publisher.publishPlayerJoin(username);
+		} catch (MqttException e) {
+			System.out.println("Could not broadcast join: " + e.getMessage());
+		}
+
 		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null);
 		dashboardNanny.setPublisher(publisher);
-		// Set the current story title from the next available story
+
+		// Set current story title
 		T4B_Story nextStory = T4B_Repository.getInstance().peekNextStory();
 		if (nextStory != null) {
 			dashboardNanny.setCurrentStoryTitle(nextStory.getTitle());
@@ -83,6 +114,7 @@ public class T4B_StoriesNanny {
 		T4B_DashboardPanel dashboardPanel = new T4B_DashboardPanel(dashboardNanny);
 		dashboardNanny.setCardsPanel(dashboardPanel.getCardsPanel());
 		dashboardNanny.setDashboardPanel(dashboardPanel);
+
 		main.setContentPane(dashboardPanel);
 		main.setSize(800, 600);
 		main.setLocationRelativeTo(null);

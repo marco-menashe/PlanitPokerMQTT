@@ -6,9 +6,11 @@ import java.util.*;
 
 
 /**
- * Shared data structure for the application.
+ * Singleton class that serves as the central data repository .
+ * managing players, storing and broadcasting chat messages,
+ * handling votes and calculating averages, and tracking story progress across sessions.
  *
- * @author AdrianSanchez
+ * @author Adrian Sanchez
  * @version 1.0
  */
 public class T4B_Repository {
@@ -27,6 +29,7 @@ public class T4B_Repository {
 	private final LinkedList<T4B_Story> prevStories;
 
 	private final List<Double> currentVotes;
+	private final Set<String> voters = new HashSet<>();
 
 	private T4B_Repository(){
 		this.pcs = new PropertyChangeSupport(this);
@@ -115,8 +118,10 @@ public class T4B_Repository {
 	}
 	public void clearVotes(){
 		currentVotes.clear();
+		voters.clear();  // ← clears voter list too
 		pcs.firePropertyChange("votesCleared", null, null);
 	}
+
 
 	public void addStory(T4B_Story story){
 		newStories.add(story);
@@ -177,4 +182,11 @@ public class T4B_Repository {
 	public List<Double> getCurrentVotes() {
 		return currentVotes;
 	}
+	public void addVote(String username, double vote) {
+		if (voters.contains(username)) return; // prevent double vote
+		voters.add(username);
+		currentVotes.add(vote);
+		pcs.firePropertyChange("voteAdded", null, vote);
+	}
+
 }
