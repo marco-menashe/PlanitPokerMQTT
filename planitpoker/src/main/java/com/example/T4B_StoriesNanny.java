@@ -47,11 +47,24 @@ public class T4B_StoriesNanny {
 	public void saveAndClose(String text) {
 		T4B_Story story = new T4B_Story(text, 0);
 		T4B_Repository.getInstance().addStory(story);
+
+		T4B_Publisher publisher = T4B_Repository.getInstance().getPublisher();
+		if (publisher == null) {
+			try {
+				publisher = new T4B_Publisher(MqttClient.generateClientId());
+				T4B_Repository.getInstance().setPublisher(publisher);
+			} catch (MqttException e) {
+				System.out.println("Failed to initialize publisher: " + e.getMessage());
+				return;
+			}
+		}
+
 		try {
-			T4B_Repository.getInstance().getPublisher().publishStory(text, 0);
+			publisher.publishStory(text, 0);
 		} catch (MqttException e) {
 			System.out.println("Failed to publish story: " + e.getMessage());
 		}
+
 		switchGUI();
 	}
 

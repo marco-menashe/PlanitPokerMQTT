@@ -52,36 +52,33 @@ public class T4B_DashboardNanny {
     public void confirmVote() {
         if (voteConfirmed) return;
         if (currentVote == null) {
-            JOptionPane.showMessageDialog(null,
-                    "Please select a card first.");
+            JOptionPane.showMessageDialog(null, "Please select a card first.");
             return;
         }
         if (currentStoryTitle == null) {
-            JOptionPane.showMessageDialog(null,
-                    "No active story to vote on.");
+            JOptionPane.showMessageDialog(null, "No active story to vote on.");
             return;
         }
 
         try {
             double val = convertVoteToNumber(currentVote);
-            T4B_Repository.getInstance().addVote(val);
-            System.out.println("DEBUG: votes now = " +
-                    T4B_Repository.getInstance().getCurrentVotes().size());
 
+            // Only publish, don't call completeCurrentStory here
             if (publisher != null) {
                 publisher.publishVote(
                         T4B_Repository.getInstance().getPlayers().get(0).getName(),
-                        currentStoryTitle, val);
+                        currentStoryTitle, val
+                );
             }
 
             voteConfirmed = true;
             if (cardsPanel != null) cardsPanel.lockSelection();
 
         } catch (NumberFormatException | MqttException e) {
-            JOptionPane.showMessageDialog(null,
-                    "Error recording vote: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error recording vote: " + e.getMessage());
         }
     }
+
 
     public void showResults() {
         List<Double> votes = T4B_Repository.getInstance().getCurrentVotes();
