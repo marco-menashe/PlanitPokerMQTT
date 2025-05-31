@@ -96,7 +96,13 @@ public class T4B_DashboardNanny {
         double avg = T4B_Repository.calculateAverage();
         dashboardPanel.updateResults();
         JOptionPane.showMessageDialog(null, "Average vote: " + avg);
-        // No longer finalizing the story here – that’s handled by subscriber
+
+        T4B_Repository.getInstance().completeCurrentStory(currentStoryTitle, (int) Math.round(avg));
+        try {
+            T4B_Repository.getInstance().getPublisher().publishCompletedStory(currentStoryTitle, (int) Math.round(avg));
+        } catch (Exception e) {
+            System.out.println("Failed to publish completed story: " + e.getMessage());
+        }
     }
 
     public void startNewVote() {

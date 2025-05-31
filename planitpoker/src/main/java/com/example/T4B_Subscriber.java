@@ -59,21 +59,21 @@ public class T4B_Subscriber implements MqttCallback {
                 System.out.println("Vote from " + username + " for story '" + storyTitle + "': " + voteValue);
                 repository.addVote(username, voteValue);
 
-                int expectedVotes = repository.getPlayers().size();
-                if (repository.getCurrentVotes().size() >= expectedVotes) {
-                    int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
-                    T4B_Story current = repository.getCurrentStory();
-                    if (current != null && current.getTitle().equals(storyTitle)) {
-                        repository.completeCurrentStory(storyTitle, finalScore);
-                        try {
-                            repository.getPublisher().publishCompletedStory(storyTitle, finalScore);
-                        } catch (Exception e) {
-                            System.out.println("Failed to publish completed story: " + e.getMessage());
-                        }
-                        repository.setCurrentStory(null);
-                    }
-                    repository.clearVotes();
-                }
+//                int expectedVotes = repository.getPlayers().size();
+//                if (repository.getCurrentVotes().size() >= expectedVotes) {
+//                    int finalScore = (int) Math.round(T4B_Repository.calculateAverage());
+//                    T4B_Story current = repository.getCurrentStory();
+//                    if (current != null && current.getTitle().equals(storyTitle)) {
+//                        repository.completeCurrentStory(storyTitle, finalScore);
+//                        try {
+//                            repository.getPublisher().publishCompletedStory(storyTitle, finalScore);
+//                        } catch (Exception e) {
+//                            System.out.println("Failed to publish completed story: " + e.getMessage());
+//                        }
+//                        repository.setCurrentStory(null);
+//                    }
+//                    repository.clearVotes();
+//                }
             }
         } else if (topic.equals("planitpoker/join")) {
             String username = new String(message.getPayload());
