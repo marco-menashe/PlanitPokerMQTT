@@ -7,7 +7,6 @@ import javax.swing.JFrame;
  *
  * @author AdrcianSanchez
  *
- *
  */
 public class T4B_Main extends JFrame {
 
@@ -17,7 +16,6 @@ public class T4B_Main extends JFrame {
 		setSize(400, 400);
 		setLocationRelativeTo(null);
 
-		// Only the login screen
 		T4B_LoginNanny loginNanny = new T4B_LoginNanny(this);
 		setContentPane(new T4B_LoginPanel(loginNanny));
 	}

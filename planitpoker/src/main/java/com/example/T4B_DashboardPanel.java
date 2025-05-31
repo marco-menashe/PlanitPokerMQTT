@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 
 /**
  * Integrates a dashboard with the cards, timer, and stories.
+ *
+ * @author Aidan
  */
 public class T4B_DashboardPanel extends JPanel {
     private T4B_SouthPanel southPanel;

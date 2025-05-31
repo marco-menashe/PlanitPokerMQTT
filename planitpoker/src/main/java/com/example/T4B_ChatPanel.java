@@ -43,11 +43,9 @@ public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
         add(scrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.SOUTH);
 
-        // Listeners
         sendButton.addActionListener(this::sendMessage);
         inputField.addActionListener(this::sendMessage);
 
-        // Register listener for new messages
         T4B_Repository.getInstance().addPropertyChangeListener(this);
         refreshChat();
     }

@@ -1,23 +1,18 @@
 package com.example;
 
-
 /**
  * Represents a story in the T4B system with a title and score.
  *
  * @author Marco Menashe
  */
+
 public class T4B_Story {
     private String title;
-
     private int score;
-
-
 
     public T4B_Story(String title, int score) {
         this.title = title;
         this.score = score;
-
-
     }
 
     public String getTitle() { return title; }
@@ -37,7 +32,4 @@ public class T4B_Story {
     public int hashCode() {
         return title.hashCode();
     }
-
-
-
 }

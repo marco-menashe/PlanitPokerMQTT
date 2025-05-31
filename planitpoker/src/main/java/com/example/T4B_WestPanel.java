@@ -12,7 +12,7 @@ import javax.swing.JTextField;
  * Panel that contains the left side of the dashboard.
  * It contains the username, start button, players, timer, invite a teammate and copy URL.
  *
- * @author
+ * @author Aidan
  */
 public class T4B_WestPanel extends JPanel {
 

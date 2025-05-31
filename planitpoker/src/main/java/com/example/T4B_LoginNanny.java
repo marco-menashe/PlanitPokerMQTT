@@ -3,7 +3,7 @@ package com.example;
 /**
  * LoginNanny is responsible for handling the login process.
  *
- * @author
+ * @author Marco
  */
 public class T4B_LoginNanny {
 	private final T4B_Main main;
@@ -18,7 +18,7 @@ public class T4B_LoginNanny {
 	}
 
 	public void login(String name) {
-		enterRoom(name); // or merge into one method
+		enterRoom(name);
 	}
 
 	private void showCreateRoomScreen() {

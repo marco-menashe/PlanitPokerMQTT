@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Controller responsible for managing the dashboard and its interactions.
  *
- * @author adriansanchez
+ * @author Aidan
  */
 public class T4B_DashboardNanny {
     private String currentVote;
@@ -37,7 +37,6 @@ public class T4B_DashboardNanny {
     public void setCurrentStoryTitle(String title) {
         this.currentStoryTitle = title;
 
-        // Notify SouthPanel to update the current story label
         if (dashboardPanel != null && dashboardPanel.getSouthPanel() != null) {
             dashboardPanel.getSouthPanel().updateCurrentStory(title);
         }
@@ -67,7 +66,6 @@ public class T4B_DashboardNanny {
         try {
             double val = convertVoteToNumber(currentVote);
 
-            // Only publish, don't call completeCurrentStory here
             if (publisher != null) {
                 publisher.publishVote(
                         T4B_Repository.getInstance().getPlayers().get(0).getName(),
@@ -117,7 +115,6 @@ public class T4B_DashboardNanny {
         T4B_Story next = T4B_Repository.getInstance().peekNextStory();
         currentStoryTitle = (next != null ? next.getTitle() : null);
 
-        // ⬇ Notify SouthPanel of the new current story
         if (dashboardPanel != null && dashboardPanel.getSouthPanel() != null) {
             dashboardPanel.getSouthPanel().updateCurrentStory(currentStoryTitle);
         }

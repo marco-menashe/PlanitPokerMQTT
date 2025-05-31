@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 /**
  * Creating a new room.
  *
- * @author
+ * @author Marco
  */
 public class T4B_CreateRoomPanel extends JPanel {
 

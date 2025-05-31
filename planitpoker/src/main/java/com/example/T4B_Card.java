@@ -1,5 +1,11 @@
 package com.example;
 
+/**
+ * Panel that displays the cards used for estimating.
+ *
+ * @author Aidan
+ */
+
 public class T4B_Card{
     private int value;
     private boolean isRevealed;

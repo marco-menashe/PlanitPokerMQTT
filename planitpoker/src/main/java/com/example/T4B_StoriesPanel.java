@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 /**
  * Allows the user to create a new story.
  *
- * @author
+ * @author Marco
  */
 public class T4B_StoriesPanel extends JPanel {
 

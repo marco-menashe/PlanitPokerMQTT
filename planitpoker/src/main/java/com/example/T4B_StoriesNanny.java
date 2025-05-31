@@ -88,7 +88,6 @@ public class T4B_StoriesNanny {
 	private void switchGUI() {
 		main.setTitle("Dashboard");
 
-		// MQTT setup
 		T4B_Publisher publisher;
 		try {
 			publisher = new T4B_Publisher(MqttClient.generateClientId());
@@ -96,11 +95,10 @@ public class T4B_StoriesNanny {
 			JOptionPane.showMessageDialog(main, "Publisher failed: " + e.getMessage());
 			return;
 		}
-
 		T4B_Repository.getInstance().setPublisher(publisher);
 
 		try {
-			new T4B_Subscriber(); // Automatically registers with Repository
+			new T4B_Subscriber();
 		} catch (MqttException e) {
 			JOptionPane.showMessageDialog(main, "Subscriber failed: " + e.getMessage());
 			return;
@@ -118,7 +116,6 @@ public class T4B_StoriesNanny {
 		T4B_DashboardNanny dashboardNanny = new T4B_DashboardNanny(null);
 		dashboardNanny.setPublisher(publisher);
 
-		// Set current story title from repository's shared currentStory
 		T4B_Story currentStory = T4B_Repository.getInstance().getCurrentStory();
 		if (currentStory != null) {
 			dashboardNanny.setCurrentStoryTitle(currentStory.getTitle());

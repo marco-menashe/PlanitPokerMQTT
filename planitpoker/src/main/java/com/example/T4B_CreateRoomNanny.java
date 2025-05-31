@@ -4,7 +4,8 @@ package com.example;
 /**
  * Act as a controller for the CreateRoomPanel.
  *
- * @author
+ * @author Marco
+ *
  */
 public class T4B_CreateRoomNanny {
 

@@ -1,12 +1,11 @@
 package com.example;
 
-
-
 /**
  * Represents a player in the T4B system with a name and player ID.
  *
  * @author Marco Menashe
  */
+
 public class T4B_Player{
 
     private String name;

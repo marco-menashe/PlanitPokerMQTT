@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 /**
  * Create a panel for user login.
  *
- * @author
+ * @author Marco
  */
 public class T4B_LoginPanel extends JPanel {
 

@@ -26,12 +26,10 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 
 		JTabbedPane storyTabs = new JTabbedPane();
 
-		// --- Current story label ---
 		currentStoryLabel = new JLabel("Current Story: None");
 		currentStoryLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		currentStoryLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		// --- Result label ---
 		resultLabel = new JLabel("Average: -");
 		resultLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -40,32 +38,24 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 		topPanel.add(resultLabel);
 		add(topPanel, BorderLayout.NORTH);
 
-		// --- Active stories ---
 		activeStories = new JTextArea();
 		activeStories.setEditable(false);
 		JScrollPane activeScrollPane = new JScrollPane(activeStories);
 		activeScrollPane.setPreferredSize(new Dimension(400, 150));
 
-		// --- Completed stories ---
 		completedStories = new JTextArea();
 		completedStories.setEditable(false);
 		JScrollPane completedScrollPane = new JScrollPane(completedStories);
 		completedScrollPane.setPreferredSize(new Dimension(400, 150));
 
-		// --- Tabs ---
 		storyTabs.addTab("Active Stories", activeScrollPane);
 		storyTabs.addTab("Completed Stories", completedScrollPane);
 
 		add(storyTabs, BorderLayout.CENTER);
-
-		// Register for repository updates
 		T4B_Repository.getInstance().addPropertyChangeListener(this);
-
-		// Initial content
 		refreshStoryLists();
 	}
 
-	// Updates both active and completed story text areas
 	public void refreshStoryLists() {
 		StringBuilder activeText = new StringBuilder();
 		Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
@@ -95,7 +85,6 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 		resultLabel.setText("Average: -");
 	}
 
-	// This can be called from DashboardNanny to display current story
 	public void updateCurrentStory(String title) {
 		currentStoryLabel.setText("Current Story: " + (title != null ? title : "None"));
 	}
