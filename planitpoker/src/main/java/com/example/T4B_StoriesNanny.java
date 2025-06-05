@@ -1,11 +1,13 @@
 package com.example;
 
+import java.util.Queue;
+
+import javax.swing.JOptionPane;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
-
-import javax.swing.*;
-import java.util.LinkedList;
-import java.util.Queue;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Controller responsible for managing the stories and their interactions with the user interface.
@@ -20,6 +22,54 @@ public class T4B_StoriesNanny {
 	public T4B_StoriesNanny(T4B_Main main) {
 		this.main = main;
 	}
+
+
+
+public void importStories() {
+    String authToken = T4B_Repository.getInstance().getAuthToken();
+    if (authToken == null || authToken.isEmpty()) {
+        JOptionPane.showMessageDialog(main, "You must log in to Taiga first.");
+        return;
+    }
+
+    // Prompt for project slug if you don't have it stored
+    String projectSlug = JOptionPane.showInputDialog(main, "Enter your Taiga project slug:");
+    if (projectSlug == null || projectSlug.isEmpty()) {
+        JOptionPane.showMessageDialog(main, "Project slug is required.");
+        return;
+    }
+
+    try {
+        int projectId = T4B_TaigaStoryFetcher.getProjectId(authToken, projectSlug);
+        JSONArray stories = T4B_TaigaStoryFetcher.fetchUserStories(authToken, projectId);
+
+        // Clear current stories if you want to replace them
+        Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
+        newStories.clear();
+
+        // Add each Taiga story as a T4B_Story
+        for (int i = 0; i < stories.length(); i++) {
+            JSONObject story = stories.getJSONObject(i);
+            String title = story.optString("subject", "(no title)");
+            int score = story.has("total_points") && !story.isNull("total_points")
+                    ? (int) story.getDouble("total_points")
+                    : 0;
+            T4B_Repository.getInstance().addStory(new T4B_Story(title, score));
+        }
+
+        JOptionPane.showMessageDialog(main, "Imported " + stories.length() + " stories from Taiga.");
+        switchGUI();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(main, "Failed to import stories from Taiga: " + e.getMessage());
+    }
+}
+
+
+
+
+
+
+
 
 	public void saveAndAddNew(String text) {
 		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // Save locally
@@ -69,17 +119,19 @@ public class T4B_StoriesNanny {
 	}
 
 
-	public void importStories() {
-		switchGUI();
-	}
+	// public void importStories() {
+	// 	switchGUI();
+	// }
 
-	public LinkedList<T4B_Story> getPrevStories() {
-		return T4B_Repository.getInstance().getPrevStories();
-	}
+	// public LinkedList<T4B_Story> getPrevStories() {
+	// 	return T4B_Repository.getInstance().getPrevStories();
+	// }
 
-	public Queue<T4B_Story> getNewStories() {
-		return T4B_Repository.getInstance().getNewStories();
-	}
+	// public Queue<T4B_Story> getNewStories() {
+	// 	return T4B_Repository.getInstance().getNewStories();
+	// }
+
+
 
 	public void cancel() {
 		System.out.println("canceling...");

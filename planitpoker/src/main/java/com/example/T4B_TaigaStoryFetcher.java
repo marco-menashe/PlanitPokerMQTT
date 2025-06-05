@@ -32,10 +32,6 @@ public class T4B_TaigaStoryFetcher {
 		}
 	}
 	
-	public static void addUsernameAndPassword(String username, String password) {
-		USERNAME = username;
-		PASSWORD = password;
-	}
 
 	public static String loginAndGetToken(String username, String password) throws Exception {
 		URL url = new URL("https://api.taiga.io/api/v1/auth");

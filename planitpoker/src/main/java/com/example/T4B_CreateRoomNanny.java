@@ -16,9 +16,10 @@ public class T4B_CreateRoomNanny {
 	}
 
 	public void createRoom(String name, String selectedItem) {
-		System.out.println(" Creating room..." + name + ", mode: " + selectedItem);
+		System.out.println("Creating room..." + name + ", mode: " + selectedItem);
 		T4B_Repository.getInstance().addCurrentRoom(name);
 		T4B_Repository.getInstance().addCurrentMode(selectedItem);
+		// T4B_Repository.getInstance().setProjectSlug(slug); 
 		switchGUI();
 	}
 

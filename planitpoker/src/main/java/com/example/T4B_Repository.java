@@ -28,6 +28,7 @@ public class T4B_Repository {
 
 
 	private String authToken;
+	private String projectSlug;
 
 
 
@@ -68,6 +69,16 @@ public class T4B_Repository {
 
 
 	public String getAuthToken() {
+		return authToken;
+	}
+
+
+	public void setProjectSlug(String projectSlug) {
+		this.projectSlug = projectSlug;
+
+	}
+
+	public String getProjectSlug() {
 		return authToken;
 	}
 	
