@@ -3,13 +3,12 @@ package com.example;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.LinkedList;
 import java.util.Queue;
 import javax.swing.*;
 
 /**
  * Stories organized in tabs.
- * The first tab contains the active stories, and the second one contains the completed stories.
+ * Now only includes active stories.
  *
  * @author adriansanchez
  */
@@ -18,7 +17,6 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 	private JLabel resultLabel;
 	private JLabel currentStoryLabel;
 	private JTextArea activeStories;
-	private JTextArea completedStories;
 
 	public T4B_SouthPanel() {
 		setBackground(new Color(161, 190, 239));
@@ -43,13 +41,7 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 		JScrollPane activeScrollPane = new JScrollPane(activeStories);
 		activeScrollPane.setPreferredSize(new Dimension(400, 150));
 
-		completedStories = new JTextArea();
-		completedStories.setEditable(false);
-		JScrollPane completedScrollPane = new JScrollPane(completedStories);
-		completedScrollPane.setPreferredSize(new Dimension(400, 150));
-
 		storyTabs.addTab("Active Stories", activeScrollPane);
-		storyTabs.addTab("Completed Stories", completedScrollPane);
 
 		add(storyTabs, BorderLayout.CENTER);
 		T4B_Repository.getInstance().addPropertyChangeListener(this);
@@ -63,13 +55,6 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 			activeText.append(story.getTitle()).append("\n");
 		}
 		activeStories.setText(activeText.toString());
-
-		StringBuilder completedText = new StringBuilder();
-		LinkedList<T4B_Story> prevStories = T4B_Repository.getInstance().getPrevStories();
-		for (T4B_Story story : prevStories) {
-			completedText.append(String.format("%-50s %10d%n", story.getTitle(), story.getScore()));
-		}
-		completedStories.setText(completedText.toString());
 	}
 
 	public void updateResults() {

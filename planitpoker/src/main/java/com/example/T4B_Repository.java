@@ -45,6 +45,8 @@ public class T4B_Repository {
 	private final List<Double> currentVotes;
 	private final Map<String, Set<String>> storyVoters = new HashMap<>();
 	private T4B_Story currentStory;
+	private final Map<String, Double> currentVotesByPlayer = new HashMap<>();
+
 
 
 	private T4B_Repository(){
@@ -155,9 +157,14 @@ public class T4B_Repository {
 	}
 	public void clearVotes(){
 		currentVotes.clear();
+		currentVotesByPlayer.clear();
 		storyVoters.clear();
 		pcs.firePropertyChange("votesCleared", null, null);
 	}
+	public Map<String, Double> getCurrentVotesByPlayer() {
+		return new HashMap<>(currentVotesByPlayer);
+	}
+
 
 
 
@@ -215,6 +222,9 @@ public class T4B_Repository {
 		if (completedStory != null) {
 			newStories.remove(completedStory);
 			completedStory.editScore(finalScore);
+
+			completedStory.setVotesByPlayer(getCurrentVotesByPlayer());
+
 			prevStories.add(completedStory);
 			pcs.firePropertyChange("storyCompleted", null, completedStory);
 
@@ -223,19 +233,20 @@ public class T4B_Repository {
 		}
 	}
 
+
 	public List<Double> getCurrentVotes() {
 		return currentVotes;
 	}
 	public void addVote(String username, double vote) {
 		String title = currentStory != null ? currentStory.getTitle() : "unknown";
-
 		storyVoters.putIfAbsent(title, new HashSet<>());
 		Set<String> votersForThisStory = storyVoters.get(title);
 
-		if (votersForThisStory.contains(username)) return; // prevent double vote
+		if (votersForThisStory.contains(username)) return;
 
 		votersForThisStory.add(username);
 		currentVotes.add(vote);
+		currentVotesByPlayer.put(username, vote);
 		pcs.firePropertyChange("voteAdded", null, vote);
 	}
 

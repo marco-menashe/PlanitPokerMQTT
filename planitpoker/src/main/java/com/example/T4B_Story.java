@@ -1,5 +1,8 @@
 package com.example;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Represents a story in the T4B system with a title and score.
  *
@@ -9,6 +12,8 @@ package com.example;
 public class T4B_Story {
     private String title;
     private int score;
+    private Map<String, Double> votesByPlayer = new HashMap<>();
+
 
     public T4B_Story(String title, int score) {
         this.title = title;
@@ -27,6 +32,14 @@ public class T4B_Story {
         T4B_Story story = (T4B_Story) obj;
         return title.equals(story.title);
     }
+    public void setVotesByPlayer(Map<String, Double> votes) {
+        this.votesByPlayer = new HashMap<>(votes);
+    }
+
+    public Map<String, Double> getVotesByPlayer() {
+        return new HashMap<>(votesByPlayer);
+    }
+
 
     @Override
     public int hashCode() {
