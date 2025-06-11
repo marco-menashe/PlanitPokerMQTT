@@ -2,33 +2,45 @@ package com.example;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 /**
- * Panel that contains the left side of the dashboard.
- * It contains the username, start button, players, timer, invite a teammate and copy URL.
+ * Panel that contains the right side of the dashboard.
+ * Includes start, timer, invite, and voting buttons.
  *
- * @author Aidan
+ * @author adriansanchez
  */
 public class T4B_WestPanel extends JPanel {
+    private JLabel timerLabel;
+    private Timer votingTimer;
+    private long startTime;
 
     public T4B_WestPanel(T4B_DashboardNanny dashboardNanny, T4B_DashboardPanel dashboardPanel) {
         setBackground(new Color(255, 204, 204));
         setLayout(new GridLayout(8, 1));
 
-        add(new JLabel("Player 1"));
+        String username = T4B_Repository.getInstance().getPlayers().get(0).getName();
+        JLabel nameLabel = new JLabel("Logged in as: " + username);
+        nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(nameLabel);
+
         JButton startButton = new JButton("Start");
-        startButton.addActionListener(e -> dashboardNanny.startNewVote());
+        startButton.addActionListener(e -> {
+            dashboardNanny.startNewVote();
+            startTimer();
+        });
         add(startButton);
 
-        add(new JLabel("Players:"));
-        add(new JLabel("00:00:00"));
+        timerLabel = new JLabel("Time: 0s");
+        timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(timerLabel);
+
         add(new JLabel("Invite a teammate"));
-        add(new JTextField("https://app.planitpoker.com"));
+        JTextField inviteField = new JTextField("https://app.planitpoker.com");
+        inviteField.setEditable(false);
+        add(inviteField);
         add(new JButton("Copy URL"));
 
         JButton confirmButton = new JButton("Confirm Vote");
@@ -36,8 +48,28 @@ public class T4B_WestPanel extends JPanel {
         add(confirmButton);
 
         JButton resultsButton = new JButton("Show Results");
-        resultsButton.addActionListener(e -> dashboardNanny.showResults());
+        resultsButton.addActionListener(e -> {
+            dashboardNanny.showResults();
+            stopTimer(); // stop timer after round ends
+        });
         add(resultsButton);
     }
 
+    private void startTimer() {
+        stopTimer(); // restart if already running
+        startTime = System.currentTimeMillis();
+        votingTimer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                long elapsedSec = (System.currentTimeMillis() - startTime) / 1000;
+                timerLabel.setText("Time: " + elapsedSec + "s");
+            }
+        });
+        votingTimer.start();
+    }
+
+    private void stopTimer() {
+        if (votingTimer != null) {
+            votingTimer.stop();
+        }
+    }
 }

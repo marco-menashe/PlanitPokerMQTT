@@ -5,6 +5,11 @@ import java.awt.*;
 import java.util.List;
 import java.util.Map;
 import javax.swing.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 
 /**
  * Integrates a dashboard with the cards, timer, and stories.
@@ -97,6 +102,9 @@ public class T4B_DashboardPanel extends JPanel {
 
         topPanel.add(showCompletedButton);
 
+        JButton showAllVotesChartButton = new JButton("All Players' Votes");
+        showAllVotesChartButton.addActionListener(e -> showAllVotesChart());
+        topPanel.add(showAllVotesChartButton);
 
         add(topPanel, BorderLayout.NORTH);
 
@@ -118,27 +126,124 @@ public class T4B_DashboardPanel extends JPanel {
     public T4B_SouthPanel getSouthPanel() {
         return southPanel;
     }
+
+
     private void showPlayerVoteHistory(String playerName) {
         List<T4B_Story> completedStories = T4B_Repository.getInstance().getPrevStories();
         StringBuilder sb = new StringBuilder(playerName + "'s Votes:\n\n");
 
         boolean hasVotes = false;
 
+        // For both text and chart
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
         for (T4B_Story story : completedStories) {
             Map<String, Double> votes = story.getVotesByPlayer();
             if (votes.containsKey(playerName)) {
+                double vote = votes.get(playerName);
                 sb.append("• ").append(story.getTitle())
-                        .append(" → ").append(votes.get(playerName))
+                        .append(" → ").append(vote)
                         .append("\n");
+                dataset.addValue(vote, "Vote", story.getTitle());
                 hasVotes = true;
             }
         }
 
         if (!hasVotes) {
-            sb.append("No votes recorded for this player.");
+            JOptionPane.showMessageDialog(null, "No votes recorded for this player.");
+            return;
         }
 
+        // Show vote list in plain text
         JOptionPane.showMessageDialog(null, sb.toString(), playerName + "'s Vote History", JOptionPane.INFORMATION_MESSAGE);
+
+        // Create and customize JFreeChart
+        // Create and customize JFreeChart
+        // Create the chart
+        JFreeChart barChart = ChartFactory.createBarChart(
+                playerName + "'s Votes",
+                "Story",
+                "Vote Value",
+                dataset
+        );
+
+// Appearance: flat blue bars, no shadows
+        var renderer = (org.jfree.chart.renderer.category.BarRenderer)
+                barChart.getCategoryPlot().getRenderer();
+        renderer.setSeriesPaint(0, new Color(30, 144, 255)); // DodgerBlue
+        renderer.setShadowVisible(false);
+        renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
+
+// Fonts and layout
+        barChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 16));
+        barChart.getCategoryPlot().getDomainAxis().setCategoryLabelPositions(
+                org.jfree.chart.axis.CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 5)
+        );
+
+// Background colors
+        barChart.setBackgroundPaint(Color.WHITE);
+        barChart.getPlot().setBackgroundPaint(Color.BLACK);
+        barChart.getPlot().setOutlineVisible(false);
+
+// Put chart in a scrollable panel
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setPreferredSize(new Dimension(1000, 600)); // Expand space for long labels
+
+        JFrame frame = new JFrame(playerName + "'s Vote Chart");
+        frame.setContentPane(chartPanel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+    }
+    private void showAllVotesChart() {
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        List<T4B_Story> stories = T4B_Repository.getInstance().getPrevStories();
+        List<T4B_Player> players = T4B_Repository.getInstance().getPlayers();
+
+        for (T4B_Story story : stories) {
+            String storyTitle = story.getTitle();
+            Map<String, Double> votes = story.getVotesByPlayer();
+
+            for (T4B_Player player : players) {
+                String playerName = player.getName();
+                if (votes.containsKey(playerName)) {
+                    dataset.addValue(votes.get(playerName), playerName, storyTitle);
+                }
+            }
+        }
+
+        JFreeChart barChart = ChartFactory.createBarChart(
+                "All Players' Votes by Story",
+                "Story",
+                "Vote Value",
+                dataset
+        );
+
+        // Style
+        barChart.setBackgroundPaint(Color.WHITE);
+        barChart.getPlot().setBackgroundPaint(Color.BLACK);
+        barChart.getPlot().setOutlineVisible(false);
+
+        org.jfree.chart.renderer.category.BarRenderer renderer =
+                (org.jfree.chart.renderer.category.BarRenderer) barChart.getCategoryPlot().getRenderer();
+        renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
+        renderer.setShadowVisible(false);
+
+        barChart.getCategoryPlot().getDomainAxis().setCategoryLabelPositions(
+                org.jfree.chart.axis.CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 5)
+        );
+
+        // Show chart
+        ChartPanel chartPanel = new ChartPanel(barChart);
+        chartPanel.setPreferredSize(new Dimension(1100, 600));
+
+        JFrame frame = new JFrame("All Player Votes");
+        frame.setContentPane(chartPanel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
 }
+
