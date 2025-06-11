@@ -1,7 +1,9 @@
 package com.example;
+import com.example.T4B_Player;
 
 import java.awt.*;
-import javax.swing.JPanel;
+import java.util.List;
+import javax.swing.*;
 
 /**
  * Integrates a dashboard with the cards, timer, and stories.
@@ -32,6 +34,20 @@ public class T4B_DashboardPanel extends JPanel {
                 playerName
         );
         add(chatPanel, BorderLayout.WEST);
+
+        JButton showPlayersButton = new JButton("Show Players");
+        showPlayersButton.addActionListener(e -> {
+            List<T4B_Player> players = T4B_Repository.getInstance().getPlayers();
+            StringBuilder sb = new StringBuilder("Current Players:\n");
+            for (T4B_Player p : players) {
+                sb.append(p.getName()).append("\n");
+            }
+            JOptionPane.showMessageDialog(null, sb.toString(), "Players", JOptionPane.INFORMATION_MESSAGE);
+        });
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topPanel.add(showPlayersButton);
+
+        add(topPanel, BorderLayout.NORTH);
 
     }
 

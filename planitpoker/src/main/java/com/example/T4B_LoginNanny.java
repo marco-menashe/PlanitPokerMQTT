@@ -15,10 +15,6 @@ public class T4B_LoginNanny {
 		this.main = main;
 	}
 
-	// public void enterRoom(String name) {
-	// 	T4B_Repository.getInstance().addName(name, false);
-	// 	showCreateRoomScreen();
-	// }
 
 	public void login(String username, String password) {
 		if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
@@ -30,6 +26,7 @@ public class T4B_LoginNanny {
 			// T4B_TaigaStoryFetcher.addUsernameAndPassword(username, password);
 			String authToken = T4B_TaigaStoryFetcher.loginAndGetToken(username, password);
 			T4B_Repository.getInstance().setAuthToken(authToken);
+			T4B_Repository.getInstance().addName(username, true);
 			JOptionPane.showMessageDialog(main, "Credentials saved! Now you can proceed.");
 			// Proceed to the next screen, e.g., showCreateRoomScreen();
 			showCreateRoomScreen();
