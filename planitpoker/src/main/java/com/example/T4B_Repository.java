@@ -169,6 +169,12 @@ public class T4B_Repository {
 
 
 	public void addStory(T4B_Story story) {
+		for (T4B_Story s : newStories) {
+			if (s.getTitle().equals(story.getTitle())) return; // already active
+		}
+		for (T4B_Story s : prevStories) {
+			if (s.getTitle().equals(story.getTitle())) return; // already completed
+		}
 		newStories.add(story);
 		if (currentStory == null) {
 			currentStory = story;
@@ -210,29 +216,30 @@ public class T4B_Repository {
 		pcs.firePropertyChange(property, oldVal, newVal);
 	}
 	public void completeCurrentStory(String title, int finalScore) {
-		T4B_Story completedStory = null;
+		T4B_Story matched = null;
 
+		// Search by title
 		for (T4B_Story story : newStories) {
 			if (story.getTitle().equals(title)) {
-				completedStory = story;
+				matched = story;
 				break;
 			}
 		}
 
-		if (completedStory != null) {
-			newStories.remove(completedStory);
-			completedStory.editScore(finalScore);
+		if (matched != null) {
+			// ✅ Safely remove by matching title directly
+			newStories.removeIf(s -> s.getTitle().equals(title));
 
-			completedStory.setVotesByPlayer(getCurrentVotesByPlayer());
+			matched.editScore(finalScore);
+			matched.setVotesByPlayer(getCurrentVotesByPlayer());
+			prevStories.add(matched);
 
-			prevStories.add(completedStory);
-			pcs.firePropertyChange("storyCompleted", null, completedStory);
+			pcs.firePropertyChange("storyCompleted", null, matched);
 
 			currentStory = newStories.peek();
 			pcs.firePropertyChange("currentStorySet", null, currentStory);
 		}
 	}
-
 
 	public List<Double> getCurrentVotes() {
 		return currentVotes;

@@ -81,10 +81,12 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 			case "currentStorySet":
 				currentStoryLabel.setText("Current Story: " +
 						(evt.getNewValue() != null ? ((T4B_Story) evt.getNewValue()).getTitle() : "None"));
+				refreshStoryLists();
 				break;
 			case "storyAdded":
 				refreshStoryLists();
 				break;
 		}
 	}
+
 }
