@@ -4,6 +4,8 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 
 import javax.swing.*;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller responsible for managing the dashboard and its interactions.
@@ -19,6 +21,7 @@ public class T4B_DashboardNanny {
     private String currentStoryTitle;
 
     private T4B_DashboardPanel dashboardPanel;
+    private static final Logger logger = LoggerFactory.getLogger(T4B_DashboardNanny.class);
 
     public T4B_DashboardNanny(T4B_CardsPanel cardsPanel) {
         this.cardsPanel = cardsPanel;
@@ -51,6 +54,7 @@ public class T4B_DashboardNanny {
     }
 
     public void confirmVote() {
+        logger.info("Attempting to confirm vote='{}' for story='{}'", currentVote, currentStoryTitle);
         if (voteConfirmed) return;
         voteConfirmed = true;
 
@@ -71,6 +75,8 @@ public class T4B_DashboardNanny {
                         T4B_Repository.getInstance().getPlayers().get(0).getName(),
                         currentStoryTitle, val
                 );
+                logger.info("Vote confirmed: user='{}', story='{}', value={}",
+                        T4B_Repository.getInstance().getPlayers().get(0).getName(), currentStoryTitle, val);
             }
 
             voteConfirmed = true;
@@ -93,6 +99,7 @@ public class T4B_DashboardNanny {
 
         double avg = T4B_Repository.calculateAverage();
         dashboardPanel.updateResults();
+        logger.info("Showing results: {} votes, average={}", votes.size(), avg);
         JOptionPane.showMessageDialog(null, "Average vote: " + avg);
 
         T4B_Repository.getInstance().completeCurrentStory(currentStoryTitle, (int) Math.round(avg));

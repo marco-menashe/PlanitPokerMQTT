@@ -1,5 +1,7 @@
 package com.example;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Act as a controller for the CreateRoomPanel.
@@ -10,6 +12,7 @@ package com.example;
 public class T4B_CreateRoomNanny {
 
 	private T4B_Main main;
+	private static final Logger logger = LoggerFactory.getLogger(T4B_CreateRoomNanny.class);
 
 	public T4B_CreateRoomNanny(T4B_Main main) {
 		this.main = main;
@@ -17,6 +20,7 @@ public class T4B_CreateRoomNanny {
 
 	public void createRoom(String name, String selectedItem) {
 		System.out.println("Creating room..." + name + ", mode: " + selectedItem);
+		logger.info("Creating room {} with mode {}", name, selectedItem);
 		T4B_Repository.getInstance().addCurrentRoom(name);
 		T4B_Repository.getInstance().addCurrentMode(selectedItem);
 		// T4B_Repository.getInstance().setProjectSlug(slug); 

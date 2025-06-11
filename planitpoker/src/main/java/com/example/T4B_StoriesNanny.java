@@ -8,6 +8,8 @@ import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controller responsible for managing the stories and their interactions with the user interface.
@@ -18,12 +20,11 @@ import org.json.JSONObject;
 public class T4B_StoriesNanny {
 
 	private final T4B_Main main;
+	private static final Logger logger = LoggerFactory.getLogger(T4B_StoriesNanny.class);
 
 	public T4B_StoriesNanny(T4B_Main main) {
 		this.main = main;
 	}
-
-
 
 public void importStories() {
     String authToken = T4B_Repository.getInstance().getAuthToken();
@@ -38,10 +39,13 @@ public void importStories() {
         JOptionPane.showMessageDialog(main, "Project slug is required.");
         return;
     }
+	logger.info("Importing stories for project slug '{}'", projectSlug);
 
-    try {
+
+	try {
         int projectId = T4B_TaigaStoryFetcher.getProjectId(authToken, projectSlug);
         JSONArray stories = T4B_TaigaStoryFetcher.fetchUserStories(authToken, projectId);
+		logger.info("Fetched {} stories from Taiga", stories.length());
 
         // Clear current stories if you want to replace them
         Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
@@ -60,6 +64,7 @@ public void importStories() {
         JOptionPane.showMessageDialog(main, "Imported " + stories.length() + " stories from Taiga.");
         switchGUI();
     } catch (Exception e) {
+		logger.error("Failed to import stories", e);
         JOptionPane.showMessageDialog(main, "Failed to import stories from Taiga: " + e.getMessage());
     }
 }

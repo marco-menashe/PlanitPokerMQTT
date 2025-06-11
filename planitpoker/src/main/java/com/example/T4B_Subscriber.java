@@ -4,6 +4,8 @@ import org.eclipse.paho.client.mqttv3.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Subscriber class that listens for story updates from the MQTT broker.
@@ -16,7 +18,7 @@ public class T4B_Subscriber implements MqttCallback {
 
     private final String broker = "tcp://test.mosquitto.org:1883";
     private MqttClient client;
-
+    private static final Logger logger = LoggerFactory.getLogger(T4B_Subscriber.class);
     private T4B_Repository repository = T4B_Repository.getInstance();
 
 
@@ -35,12 +37,13 @@ public class T4B_Subscriber implements MqttCallback {
     @Override
     public void connectionLost(Throwable cause) {
         System.out.println("Connection lost: " + cause.getMessage());
+        logger.warn("MQTT connection lost", cause);
     }
 
     @Override
     public void messageArrived(String topic, MqttMessage message) {
         String payload = new String(message.getPayload());
-
+        logger.debug("MQTT msg on '{}': {}", topic, payload);
         if (topic.equals("planitpoker/chat")) {
             String[] parts = payload.split("\\|", 2);
             if (parts.length == 2) {

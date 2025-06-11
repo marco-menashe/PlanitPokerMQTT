@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The {@code T4B_ChatPanel} class represents a chat interface.
 
@@ -21,6 +24,7 @@ public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
     private JButton sendButton;
     private final T4B_Publisher publisher;
     private final String playerName;
+    private static final Logger logger = LoggerFactory.getLogger(T4B_ChatPanel.class);
 
     public T4B_ChatPanel(T4B_Publisher publisher, String playerName) {
         this.publisher = publisher;
@@ -54,9 +58,11 @@ public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
         String msg = inputField.getText().trim();
         if (!msg.isEmpty()) {
             try {
+                logger.info("Publishing chat from {}: {}", playerName, msg);
                 publisher.publishChatMessage(playerName, msg);
                 inputField.setText("");
             } catch (Exception ex) {
+                logger.error("Failed to send chat message", ex);
                 JOptionPane.showMessageDialog(this, "Failed to send message: " + ex.getMessage());
             }
         }
@@ -64,6 +70,7 @@ public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
 
     private void refreshChat() {
         List<String> messages = T4B_Repository.getInstance().getChatMessages();
+        logger.debug("Refreshing chat UI with {} messages", messages.size());
         chatArea.setText(String.join("\n", messages));
     }
 

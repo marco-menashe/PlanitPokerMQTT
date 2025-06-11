@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class T4B_TaigaStoryFetcher {
 	
@@ -16,6 +18,7 @@ public class T4B_TaigaStoryFetcher {
 	private static String USERNAME = "your_username";
 	private static String PASSWORD = "your_password";
 	// private static final String AUTH_TOKEN = "";
+	private static final Logger logger = LoggerFactory.getLogger(T4B_TaigaStoryFetcher.class);
 	
 	public static void main(String[] args) throws Exception {
 		try {
@@ -37,17 +40,20 @@ public class T4B_TaigaStoryFetcher {
 		URL url = new URL("https://api.taiga.io/api/v1/auth");
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
+		logger.debug("POST {}", url);
 		conn.setRequestProperty("Content-Type", "application/json");
 		conn.setDoOutput(true);
 		String jsonInput = String.format("{\"type\": \"normal\", \"username\": \"%s\", \"password\": \"%s\"}", username, password);
 		try (OutputStream os = conn.getOutputStream()) {
 			os.write(jsonInput.getBytes());
+			logger.debug("Sent login payload for user='{}'", username);
 			os.flush();
 		}
 		int responseCode = conn.getResponseCode();
 		BufferedReader in = new BufferedReader(new InputStreamReader(
 			responseCode == 200 ? conn.getInputStream() : conn.getErrorStream()
 		));
+		logger.debug("Received HTTP {}", responseCode);
 		StringBuilder response = new StringBuilder();
 		String line;
 		while ((line = in.readLine()) != null) {
@@ -61,6 +67,7 @@ public class T4B_TaigaStoryFetcher {
 		}
 		String authToken = json.getString("auth_token");
 		System.out.println("Auth token: " + authToken);
+		logger.info("Authenticated with Taiga; token acquired");
 		return authToken;
 	}
 	
