@@ -1,6 +1,6 @@
 <configuration>
     <!-- your application’s root logger -->
-    <appender name="HTTP" class="com.example.HttpAppender">
+    <appender name="HTTP" class="com.example.T4B_HttpAppender">
         <url>https://your.logging.endpoint/logs</url>
         <bearerToken>${LOG_BEARER_TOKEN:-}</bearerToken>
     </appender>

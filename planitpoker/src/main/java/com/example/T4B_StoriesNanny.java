@@ -45,7 +45,7 @@ public void importStories() {
 	try {
         int projectId = T4B_TaigaStoryFetcher.getProjectId(authToken, projectSlug);
         JSONArray stories = T4B_TaigaStoryFetcher.fetchUserStories(authToken, projectId);
-		logger.info("Fetched {} stories from Taiga", stories.length());
+		logger.info("Fetched {} stories (projectId={})", stories.length(), projectId);
 
    
         Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
@@ -64,7 +64,7 @@ public void importStories() {
         JOptionPane.showMessageDialog(main, "Imported " + stories.length() + " stories from Taiga.");
         switchGUI();
     } catch (Exception e) {
-		logger.error("Failed to import stories", e);
+		logger.error("Import STORIES FAILED for project='{}': {}", projectSlug, e.getMessage(), e);
         JOptionPane.showMessageDialog(main, "Failed to import stories from Taiga: " + e.getMessage());
     }
 }

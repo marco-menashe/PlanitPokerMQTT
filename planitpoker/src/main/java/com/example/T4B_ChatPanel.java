@@ -56,15 +56,19 @@ public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
 
     private void sendMessage(ActionEvent e) {
         String msg = inputField.getText().trim();
-        if (!msg.isEmpty()) {
-            try {
-                logger.info("Publishing chat from {}: {}", playerName, msg);
-                publisher.publishChatMessage(playerName, msg);
-                inputField.setText("");
-            } catch (Exception ex) {
-                logger.error("Failed to send chat message", ex);
-                JOptionPane.showMessageDialog(this, "Failed to send message: " + ex.getMessage());
-            }
+        if (msg.isEmpty()) {
+            logger.debug("sendMessage: empty message ignored");
+            return;
+        }
+        logger.info("Sending chat message from '{}' → {}", playerName, msg);
+        try {
+            //logger.info("Publishing chat from {}: {}", playerName, msg);
+            publisher.publishChatMessage(playerName, msg);
+            inputField.setText("");
+            logger.debug("sendMessage: publish succeeded");
+        } catch (Exception ex) {
+            logger.error("sendMessage: publish FAILED for '{}': {}", playerName, ex.getMessage(), ex);
+            JOptionPane.showMessageDialog(this, "Failed to send message: " + ex.getMessage());
         }
     }
 

@@ -29,14 +29,14 @@ public class T4B_LoginNanny {
 			// Store credentials using TaigaStoryFetcher
 			// T4B_TaigaStoryFetcher.addUsernameAndPassword(username, password);
 			String authToken = T4B_TaigaStoryFetcher.loginAndGetToken(username, password);
-			logger.info("Login successful, token length={}", authToken.length());
+			logger.info("Login SUCCESS for user='{}'; tokenLength={}", username, authToken.length());
 			T4B_Repository.getInstance().setAuthToken(authToken);
 			T4B_Repository.getInstance().addName(username, true);
 			JOptionPane.showMessageDialog(main, "Credentials saved! Now you can proceed.");
 			// Proceed to the next screen, e.g., showCreateRoomScreen();
 			showCreateRoomScreen();
 		} catch (Exception e) {
-			logger.error("Login failed for user='{}'", username, e);
+			logger.error("Login FAILED for user='{}': {}", username, e.getMessage(), e);
 			JOptionPane.showMessageDialog(main, "Failed to save credentials: " + e.getMessage());
 		}
 	}
