@@ -86,6 +86,7 @@ public class T4B_Repository {
 	
 	
 	
+	
 	public T4B_Story peekNextStory() {
 		return newStories.peek();
 	}

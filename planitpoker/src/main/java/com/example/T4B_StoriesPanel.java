@@ -30,18 +30,18 @@ public class T4B_StoriesPanel extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 
 		JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
-		JButton saveAddNewButton = new JButton("Save & Add New");
-		JButton saveCloseButton = new JButton("Save & Close");
+		// JButton saveAddNewButton = new JButton("Save & Add New");
+		// JButton saveCloseButton = new JButton("Save & Close");
 		JButton importButton = new JButton("Import");
 		JButton cancelButton = new JButton("Cancel");
-		buttonPanel.add(saveAddNewButton);
-		buttonPanel.add(saveCloseButton);
+		// buttonPanel.add(saveAddNewButton);
+		// buttonPanel.add(saveCloseButton);
 		buttonPanel.add(importButton);
 		buttonPanel.add(cancelButton);
 		add(buttonPanel, BorderLayout.SOUTH);
 
-		saveAddNewButton.addActionListener(e -> storiesNanny.saveAndAddNew(storyTextArea.getText()));
-		saveCloseButton.addActionListener(e -> storiesNanny.saveAndClose(storyTextArea.getText()));
+		// saveAddNewButton.addActionListener(e -> storiesNanny.saveAndAddNew(storyTextArea.getText()));
+		// saveCloseButton.addActionListener(e -> storiesNanny.saveAndClose(storyTextArea.getText()));
 		importButton.addActionListener(e -> storiesNanny.importStories());
 		cancelButton.addActionListener(e -> storiesNanny.cancel());
 	}
