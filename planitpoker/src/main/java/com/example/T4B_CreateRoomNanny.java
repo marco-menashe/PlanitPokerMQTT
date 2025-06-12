@@ -19,12 +19,17 @@ public class T4B_CreateRoomNanny {
 	}
 
 	public void createRoom(String name, String selectedItem) {
-		System.out.println("Creating room..." + name + ", mode: " + selectedItem);
-		logger.info("Creating room {} with mode {}", name, selectedItem);
-		T4B_Repository.getInstance().addCurrentRoom(name);
-		T4B_Repository.getInstance().addCurrentMode(selectedItem);
-		// T4B_Repository.getInstance().setProjectSlug(slug); 
-		switchGUI();
+		//System.out.println("Creating room..." + name + ", mode: " + selectedItem);
+		logger.info("createRoom invoked: name='{}', mode='{}'", name, selectedItem);
+		// T4B_Repository.getInstance().setProjectSlug(slug);
+		try {
+			T4B_Repository.getInstance().addCurrentRoom(name);
+			T4B_Repository.getInstance().addCurrentMode(selectedItem);
+			switchGUI();
+			logger.info("createRoom SUCCESS: room='{}'", name);
+		} catch (Exception e) {
+			logger.error("createRoom FAILED for room='{}': {}", name, e.getMessage(), e);
+		}
 	}
 
 	private void switchGUI() {
