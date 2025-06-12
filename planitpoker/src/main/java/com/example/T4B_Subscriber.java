@@ -86,11 +86,6 @@ public class T4B_Subscriber implements MqttCallback {
                     repo.addName(name, false);
         }
     }
-            // Notify the nanny that a player list was received
-            T4B_LoginNanny nanny = T4B_Repository.getInstance().getLoginNanny();
-            if (nanny != null) {
-                nanny.notifyPlayerListReceived();
-            }
 }
     }
 
