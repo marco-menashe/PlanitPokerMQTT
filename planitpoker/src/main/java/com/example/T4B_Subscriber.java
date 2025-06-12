@@ -1,9 +1,10 @@
 package com.example;
 
-import org.eclipse.paho.client.mqttv3.*;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
+import org.eclipse.paho.client.mqttv3.MqttCallback;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +77,21 @@ public class T4B_Subscriber implements MqttCallback {
                 repository.setCurrentStory(story);
             }
         }
+        else if (topic.equals("planitpoker/players")) {
+            String[] names = payload.split(",");
+            T4B_Repository repo = T4B_Repository.getInstance();
+            repo.clearPlayers(); 
+            for (String name : names) {
+                if (!name.isEmpty()) {
+                    repo.addName(name, false);
+        }
+    }
+            // Notify the nanny that a player list was received
+            T4B_LoginNanny nanny = T4B_Repository.getInstance().getLoginNanny();
+            if (nanny != null) {
+                nanny.notifyPlayerListReceived();
+            }
+}
     }
 
     public void disconnect() throws MqttException {

@@ -227,7 +227,7 @@ public class T4B_Repository {
 		}
 
 		if (matched != null) {
-			// ✅ Safely remove by matching title directly
+
 			newStories.removeIf(s -> s.getTitle().equals(title));
 
 			matched.editScore(finalScore);
@@ -265,4 +265,8 @@ public class T4B_Repository {
 		this.currentStory = story;
 	}
 
+	public void clearPlayers() {
+		players.clear();
+		pcs.firePropertyChange("playersCleared", null, null);
+	}
 }
