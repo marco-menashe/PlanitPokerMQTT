@@ -21,8 +21,8 @@ public class T4B_LoginPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel subtitleLabel = new JLabel("Join the room:");
         subtitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        JLabel accountLabel = new JLabel("Already have an account?");
-        accountLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        // JLabel accountLabel = new JLabel("Already have an account?");
+        // accountLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JTextField nameField = new JTextField("Enter your name");
         JPasswordField passwordField = new JPasswordField("Enter your password");
         // JButton enterButton = new JButton("Enter");
@@ -34,7 +34,7 @@ public class T4B_LoginPanel extends JPanel {
         add(nameField);
         add(passwordField);
         // add(enterButton);
-        add(accountLabel);
+        // add(accountLabel);
         add(loginButton);
 
         // enterButton.addActionListener(e -> joinRoomNanny.enterRoom(nameField.getText()));

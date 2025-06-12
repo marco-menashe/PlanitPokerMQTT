@@ -37,11 +37,11 @@ public class T4B_WestPanel extends JPanel {
         timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(timerLabel);
 
-        add(new JLabel("Invite a teammate"));
-        JTextField inviteField = new JTextField("https://app.planitpoker.com");
-        inviteField.setEditable(false);
-        add(inviteField);
-        add(new JButton("Copy URL"));
+        // add(new JLabel("Invite a teammate"));
+        // JTextField inviteField = new JTextField("https://app.planitpoker.com");
+        // inviteField.setEditable(false);
+        // add(inviteField);
+        // add(new JButton("Copy URL"));
 
         JButton confirmButton = new JButton("Confirm Vote");
         confirmButton.addActionListener(e -> dashboardNanny.confirmVote());

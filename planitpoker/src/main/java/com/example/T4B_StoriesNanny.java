@@ -33,7 +33,7 @@ public void importStories() {
         return;
     }
 
-    // Prompt for project slug if you don't have it stored
+
     String projectSlug = JOptionPane.showInputDialog(main, "Enter your Taiga project slug:");
     if (projectSlug == null || projectSlug.isEmpty()) {
         JOptionPane.showMessageDialog(main, "Project slug is required.");
@@ -47,11 +47,11 @@ public void importStories() {
         JSONArray stories = T4B_TaigaStoryFetcher.fetchUserStories(authToken, projectId);
 		logger.info("Fetched {} stories from Taiga", stories.length());
 
-        // Clear current stories if you want to replace them
+   
         Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
         newStories.clear();
 
-        // Add each Taiga story as a T4B_Story
+
         for (int i = 0; i < stories.length(); i++) {
             JSONObject story = stories.getJSONObject(i);
             String title = story.optString("subject", "(no title)");
