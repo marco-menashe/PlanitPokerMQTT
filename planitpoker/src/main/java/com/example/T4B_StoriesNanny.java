@@ -124,18 +124,6 @@ public void importStories() {
 	}
 
 
-	// public void importStories() {
-	// 	switchGUI();
-	// }
-
-	// public LinkedList<T4B_Story> getPrevStories() {
-	// 	return T4B_Repository.getInstance().getPrevStories();
-	// }
-
-	// public Queue<T4B_Story> getNewStories() {
-	// 	return T4B_Repository.getInstance().getNewStories();
-	// }
-
 
 
 	public void cancel() {
