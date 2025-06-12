@@ -1,6 +1,7 @@
 package com.example;
 
 import javax.swing.JOptionPane;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,10 +28,9 @@ public class T4B_LoginNanny {
 			return;
 		}
 		try {
-			// Store credentials using TaigaStoryFetcher
-			// T4B_TaigaStoryFetcher.addUsernameAndPassword(username, password);
+			
 			String authToken = T4B_TaigaStoryFetcher.loginAndGetToken(username, password);
-			logger.info("Login SUCCESS for user='{}'; tokenLength={}", username, authToken.length());
+			logger.info("Login successful, token length={}", authToken.length());
 			T4B_Repository.getInstance().setAuthToken(authToken);
 			T4B_Repository.getInstance().addName(username, true);
 			// If this is the first player, start broadcasting
@@ -41,7 +41,7 @@ public class T4B_LoginNanny {
 			// Proceed to the next screen, e.g., showCreateRoomScreen();
 			showCreateRoomScreen();
 		} catch (Exception e) {
-			logger.error("Login FAILED for user='{}': {}", username, e.getMessage(), e);
+			logger.error("Login failed for user='{}'", username, e);
 			JOptionPane.showMessageDialog(main, "Failed to save credentials: " + e.getMessage());
 		}
 	}
