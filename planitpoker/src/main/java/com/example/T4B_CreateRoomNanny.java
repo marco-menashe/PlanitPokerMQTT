@@ -7,10 +7,9 @@ import org.slf4j.LoggerFactory;
  * Act as a controller for the CreateRoomPanel.
  *
  * @author Marco
- *
  */
-public class T4B_CreateRoomNanny {
 
+public class T4B_CreateRoomNanny {
 	private T4B_Main main;
 	private static final Logger logger = LoggerFactory.getLogger(T4B_CreateRoomNanny.class);
 
@@ -19,9 +18,7 @@ public class T4B_CreateRoomNanny {
 	}
 
 	public void createRoom(String name, String selectedItem) {
-		//System.out.println("Creating room..." + name + ", mode: " + selectedItem);
 		logger.info("createRoom invoked: name='{}', mode='{}'", name, selectedItem);
-		// T4B_Repository.getInstance().setProjectSlug(slug);
 		try {
 			T4B_Repository.getInstance().addCurrentRoom(name);
 			T4B_Repository.getInstance().addCurrentMode(selectedItem);
@@ -41,5 +38,4 @@ public class T4B_CreateRoomNanny {
 		main.revalidate();
 		main.repaint();
 	}
-
 }

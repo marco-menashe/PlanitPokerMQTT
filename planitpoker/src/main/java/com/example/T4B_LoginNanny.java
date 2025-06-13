@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Marco
  */
+
 public class T4B_LoginNanny {
 	private final T4B_Main main;
 	private static final Logger logger = LoggerFactory.getLogger(T4B_LoginNanny.class);
@@ -19,7 +20,6 @@ public class T4B_LoginNanny {
 		this.main = main;
 	}
 
-
 	public void login(String username, String password) {
 		logger.info("Login attempt for user='{}'", username);
 		if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
@@ -28,17 +28,14 @@ public class T4B_LoginNanny {
 			return;
 		}
 		try {
-			
 			String authToken = T4B_TaigaStoryFetcher.loginAndGetToken(username, password);
 			logger.info("Login successful, token length={}", authToken.length());
 			T4B_Repository.getInstance().setAuthToken(authToken);
 			T4B_Repository.getInstance().addName(username, true);
-			// If this is the first player, start broadcasting
 			if (T4B_Repository.getInstance().getPlayers().size() == 1) {
 				startBroadcastingPlayerList();
 			}
 			JOptionPane.showMessageDialog(main, "Credentials saved! Now you can proceed.");
-			// Proceed to the next screen, e.g., showCreateRoomScreen();
 			showCreateRoomScreen();
 		} catch (Exception e) {
 			logger.error("Login failed for user='{}'", username, e);
@@ -64,7 +61,7 @@ public class T4B_LoginNanny {
 					if (publisher != null) {
 						publisher.publishPlayerList(T4B_Repository.getInstance().getPlayers());
 					}
-					Thread.sleep(2000); // broadcast every 2 seconds
+					Thread.sleep(2000);
 				}
 			} catch (InterruptedException ignored) {}
 			catch (Exception e) {

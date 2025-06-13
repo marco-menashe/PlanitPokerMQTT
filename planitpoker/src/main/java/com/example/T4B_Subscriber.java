@@ -16,12 +16,10 @@ import org.slf4j.LoggerFactory;
  */
 
 public class T4B_Subscriber implements MqttCallback {
-
     private final String broker = "tcp://test.mosquitto.org:1883";
     private MqttClient client;
     private static final Logger logger = LoggerFactory.getLogger(T4B_Subscriber.class);
     private T4B_Repository repository = T4B_Repository.getInstance();
-
 
     public T4B_Subscriber() throws MqttException {
         client = new MqttClient(broker, MqttClient.generateClientId());
@@ -32,7 +30,6 @@ public class T4B_Subscriber implements MqttCallback {
         client.subscribe("planitpoker/votes");
         client.subscribe("planitpoker/stories");
         client.subscribe("planitpoker/join");
-
     }
 
     @Override
@@ -76,25 +73,19 @@ public class T4B_Subscriber implements MqttCallback {
                 repository.addStory(story);
                 repository.setCurrentStory(story);
             }
-        }
-        else if (topic.equals("planitpoker/players")) {
+        } else if (topic.equals("planitpoker/players")) {
             String[] names = payload.split(",");
             T4B_Repository repo = T4B_Repository.getInstance();
-            repo.clearPlayers(); 
+            repo.clearPlayers();
             for (String name : names) {
                 if (!name.isEmpty()) {
                     repo.addName(name, false);
+                }
+            }
         }
-    }
-}
-    }
-
-    public void disconnect() throws MqttException {
-        client.disconnect();
     }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-        // No action needed for subscriber
     }
 }

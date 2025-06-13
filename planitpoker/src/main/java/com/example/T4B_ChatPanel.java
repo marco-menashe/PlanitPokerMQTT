@@ -10,15 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The {@code T4B_ChatPanel} class represents a chat interface.
-
- * <p>This class listens for new chat messages via a property change listener on the shared {@link T4B_Repository}.
- * Messages are published through a {@link T4B_Publisher} instance.
+ * Represents a chat interface. Listens for new chat messages via a property change listener on the shared Repository
+ * Messages are published through a Publisher instance.
  *
  * @author Adrian Sanchez
  */
-public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
 
+public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
     private JTextArea chatArea;
     private JTextField inputField;
     private JButton sendButton;
@@ -62,7 +60,6 @@ public class T4B_ChatPanel extends JPanel implements PropertyChangeListener {
         }
         logger.info("Sending chat message from '{}' → {}", playerName, msg);
         try {
-            //logger.info("Publishing chat from {}: {}", playerName, msg);
             publisher.publishChatMessage(playerName, msg);
             inputField.setText("");
             logger.debug("sendMessage: publish succeeded");

@@ -1,5 +1,12 @@
 package com.example;
 
+/**
+ * Allows user to login via Taiga account to import stories from scrum backlog.
+ * Reads and formats info from Taiga to usable stories for PlanItPoker.
+ *
+ * @author Marco Menashe
+ */
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -13,11 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class T4B_TaigaStoryFetcher {
-	
-	private static final String TAIGA_API = "https://api.taiga.io/api/v1";
 	private static String USERNAME = "your_username";
 	private static String PASSWORD = "your_password";
-	// private static final String AUTH_TOKEN = "";
 	private static final Logger logger = LoggerFactory.getLogger(T4B_TaigaStoryFetcher.class);
 	
 	public static void main(String[] args) throws Exception {
@@ -25,11 +29,7 @@ public class T4B_TaigaStoryFetcher {
 			String authToken = loginAndGetToken(USERNAME, PASSWORD);
 			System.out.println("Authenticated successfully. Taiga Token: " + authToken);
 			int projectId = getProjectId(authToken, "2thesimplexity-pac-man");
-		  //	getUserStories(authToken, projectId);
 			System.out.println(projectId);
-			// 1. Get all user stories
-			JSONArray stories = fetchUserStories(authToken, projectId);						
-			// updateBacklogTotalPoints(authToken, stories, 5.0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

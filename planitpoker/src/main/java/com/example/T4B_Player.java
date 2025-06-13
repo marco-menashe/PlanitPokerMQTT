@@ -7,7 +7,6 @@ package com.example;
  */
 
 public class T4B_Player{
-
     private String name;
     private String playerID;
 

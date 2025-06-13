@@ -12,6 +12,7 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author Marco Menashe
  */
+
 public class T4B_Publisher {
     private final String broker = "tcp://test.mosquitto.org:1883";
     private MqttClient client;
@@ -39,7 +40,6 @@ public class T4B_Publisher {
         client.publish("planitpoker/votes", message);
     }
 
-    // Publish a player joining the room
     public void publishPlayerJoin(String username) throws MqttException {
         MqttMessage message = new MqttMessage(username.getBytes());
         client.publish("planitpoker/join", message);
@@ -56,15 +56,8 @@ public class T4B_Publisher {
         for (T4B_Player p : players) {
             sb.append(p.getName()).append(",");
         }
-        if (sb.length() > 0) sb.setLength(sb.length() - 1); // remove trailing comma
+        if (sb.length() > 0) sb.setLength(sb.length() - 1);
         MqttMessage message = new MqttMessage(sb.toString().getBytes());
         client.publish("planitpoker/players", message);
-    }
-
-    // Disconnect from the MQTT broker
-    public void disconnect() throws MqttException {
-        if (client != null && client.isConnected()) {
-            client.disconnect();
-        }
     }
 }

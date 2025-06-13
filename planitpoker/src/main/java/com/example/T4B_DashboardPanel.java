@@ -1,5 +1,4 @@
 package com.example;
-import com.example.T4B_Player;
 
 import java.awt.*;
 import java.util.List;
@@ -16,6 +15,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
  *
  * @author Aidan
  */
+
 public class T4B_DashboardPanel extends JPanel {
     private T4B_SouthPanel southPanel;
 
@@ -79,7 +79,6 @@ public class T4B_DashboardPanel extends JPanel {
                 return;
             }
 
-            // Dropdown list of players
             String[] playerNames = players.stream()
                     .map(T4B_Player::getName)
                     .toArray(String[]::new);
@@ -107,7 +106,6 @@ public class T4B_DashboardPanel extends JPanel {
         topPanel.add(showAllVotesChartButton);
 
         add(topPanel, BorderLayout.NORTH);
-
     }
 
     public void updateResults() {
@@ -127,14 +125,10 @@ public class T4B_DashboardPanel extends JPanel {
         return southPanel;
     }
 
-
     private void showPlayerVoteHistory(String playerName) {
         List<T4B_Story> completedStories = T4B_Repository.getInstance().getPrevStories();
         StringBuilder sb = new StringBuilder(playerName + "'s Votes:\n\n");
-
         boolean hasVotes = false;
-
-        // For both text and chart
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         for (T4B_Story story : completedStories) {
@@ -148,18 +142,13 @@ public class T4B_DashboardPanel extends JPanel {
                 hasVotes = true;
             }
         }
-
         if (!hasVotes) {
             JOptionPane.showMessageDialog(null, "No votes recorded for this player.");
             return;
         }
 
-        // Show vote list in plain text
         JOptionPane.showMessageDialog(null, sb.toString(), playerName + "'s Vote History", JOptionPane.INFORMATION_MESSAGE);
 
-        // Create and customize JFreeChart
-        // Create and customize JFreeChart
-        // Create the chart
         JFreeChart barChart = ChartFactory.createBarChart(
                 playerName + "'s Votes",
                 "Story",
@@ -167,25 +156,21 @@ public class T4B_DashboardPanel extends JPanel {
                 dataset
         );
 
-// Appearance: flat blue bars, no shadows
         var renderer = (org.jfree.chart.renderer.category.BarRenderer)
                 barChart.getCategoryPlot().getRenderer();
         renderer.setSeriesPaint(0, new Color(30, 144, 255)); // DodgerBlue
         renderer.setShadowVisible(false);
         renderer.setBarPainter(new org.jfree.chart.renderer.category.StandardBarPainter());
 
-// Fonts and layout
         barChart.getTitle().setFont(new Font("SansSerif", Font.BOLD, 16));
         barChart.getCategoryPlot().getDomainAxis().setCategoryLabelPositions(
                 org.jfree.chart.axis.CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 5)
         );
 
-// Background colors
         barChart.setBackgroundPaint(Color.WHITE);
         barChart.getPlot().setBackgroundPaint(Color.BLACK);
         barChart.getPlot().setOutlineVisible(false);
 
-// Put chart in a scrollable panel
         ChartPanel chartPanel = new ChartPanel(barChart);
         chartPanel.setPreferredSize(new Dimension(1000, 600)); // Expand space for long labels
 
@@ -220,7 +205,6 @@ public class T4B_DashboardPanel extends JPanel {
                 dataset
         );
 
-        // Style
         barChart.setBackgroundPaint(Color.WHITE);
         barChart.getPlot().setBackgroundPaint(Color.BLACK);
         barChart.getPlot().setOutlineVisible(false);
@@ -234,7 +218,6 @@ public class T4B_DashboardPanel extends JPanel {
                 org.jfree.chart.axis.CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 5)
         );
 
-        // Show chart
         ChartPanel chartPanel = new ChartPanel(barChart);
         chartPanel.setPreferredSize(new Dimension(1100, 600));
 
@@ -244,6 +227,5 @@ public class T4B_DashboardPanel extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
 }
 

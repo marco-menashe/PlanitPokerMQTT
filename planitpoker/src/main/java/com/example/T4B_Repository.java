@@ -21,33 +21,21 @@ import java.util.Set;
  * @version 1.0
  */
 public class T4B_Repository {
-
-
 	private static T4B_Repository instance;
 	private final PropertyChangeSupport pcs;
-
-
 	private String authToken;
 	private String projectSlug;
-
-
-
-
 	private String roomID;
 	private String mode;
 	private T4B_Publisher publisher;
-
 	private final List<T4B_Player> players;
 	private final List<String> chatMessages;
 	private final Queue<T4B_Story> newStories;
 	private final LinkedList<T4B_Story> prevStories;
-
 	private final List<Double> currentVotes;
 	private final Map<String, Set<String>> storyVoters = new HashMap<>();
 	private T4B_Story currentStory;
 	private final Map<String, Double> currentVotesByPlayer = new HashMap<>();
-
-
 
 	private T4B_Repository(){
 		this.pcs = new PropertyChangeSupport(this);
@@ -69,22 +57,9 @@ public class T4B_Repository {
 		this.authToken = authToken;
 	}
 
-
 	public String getAuthToken() {
 		return authToken;
 	}
-
-
-	public void setProjectSlug(String projectSlug) {
-		this.projectSlug = projectSlug;
-
-	}
-
-	public String getProjectSlug() {
-		return authToken;
-	}
-	
-	
 	
 	public T4B_Story peekNextStory() {
 		return newStories.peek();
@@ -136,12 +111,6 @@ public class T4B_Repository {
 		return players;
 	}
 
-	public void addVote(double vote){
-		currentVotes.add(vote);
-		pcs.firePropertyChange("voteAdded", null, vote);
-	}
-
-
 	public static double calculateAverage() {
 		List<Double> votes = getInstance().getCurrentVotes();
 		if (votes.isEmpty()) return Double.NaN;
@@ -165,9 +134,6 @@ public class T4B_Repository {
 		return new HashMap<>(currentVotesByPlayer);
 	}
 
-
-
-
 	public void addStory(T4B_Story story) {
 		for (T4B_Story s : newStories) {
 			if (s.getTitle().equals(story.getTitle())) return; // already active
@@ -181,12 +147,6 @@ public class T4B_Repository {
 			pcs.firePropertyChange("currentStorySet", null, currentStory);
 		}
 		pcs.firePropertyChange("storyAdded", null, story);
-	}
-
-	public void addStory(String title, int score){
-		T4B_Story story = new T4B_Story(title, score);
-		prevStories.add(story);
-		pcs.firePropertyChange("storyCompleted", null, story);
 	}
 
 	public Queue<T4B_Story> getNewStories() {
@@ -212,13 +172,9 @@ public class T4B_Repository {
 		pcs.addPropertyChangeListener(listener);
 	}
 
-	public void fireCustomChange(String property, Object oldVal, Object newVal){
-		pcs.firePropertyChange(property, oldVal, newVal);
-	}
 	public void completeCurrentStory(String title, int finalScore) {
 		T4B_Story matched = null;
 
-		// Search by title
 		for (T4B_Story story : newStories) {
 			if (story.getTitle().equals(title)) {
 				matched = story;
@@ -227,7 +183,6 @@ public class T4B_Repository {
 		}
 
 		if (matched != null) {
-
 			newStories.removeIf(s -> s.getTitle().equals(title));
 
 			matched.editScore(finalScore);

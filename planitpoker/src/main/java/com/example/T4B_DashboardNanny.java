@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Aidan
  */
+
 public class T4B_DashboardNanny {
     private String currentVote;
     private boolean voteConfirmed = false;
@@ -87,7 +88,6 @@ public class T4B_DashboardNanny {
         }
     }
 
-
     public void showResults() {
         List<Double> votes = T4B_Repository.getInstance().getCurrentVotes();
         System.out.println("DEBUG: showResults sees votes = " + votes.size());
@@ -126,7 +126,6 @@ public class T4B_DashboardNanny {
             dashboardPanel.getSouthPanel().updateCurrentStory(currentStoryTitle);
         }
     }
-
 
     public boolean isVoteConfirmed() {
         return voteConfirmed;

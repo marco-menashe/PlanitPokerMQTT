@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
  *
  * @author Marco
  */
+
 public class T4B_StoriesPanel extends JPanel {
 
 	public T4B_StoriesPanel(T4B_StoriesNanny storiesNanny) {
@@ -45,5 +46,4 @@ public class T4B_StoriesPanel extends JPanel {
 		importButton.addActionListener(e -> storiesNanny.importStories());
 		cancelButton.addActionListener(e -> storiesNanny.cancel());
 	}
-
 }

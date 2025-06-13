@@ -13,12 +13,14 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * Sends structured log events to an HTTP endpoint.
+ *
+ * @author Aidan
  */
+
 public class T4B_HttpAppender extends AppenderBase<ILoggingEvent> {
     private String url;
     private String bearerToken;
     private static final Logger logger = LoggerFactory.getLogger(T4B_CreateRoomNanny.class);
-
 
     @Override
     protected void append(ILoggingEvent event) {
@@ -41,8 +43,6 @@ public class T4B_HttpAppender extends AppenderBase<ILoggingEvent> {
         logger.debug("HttpAppender: opening HTTP connection to {}", url);
         URL endpoint = new URL(this.url);
         HttpURLConnection conn = (HttpURLConnection) endpoint.openConnection();
-//        conn.setConnectTimeout(5_000);
-//        conn.setReadTimeout(5_000);
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
@@ -64,6 +64,7 @@ public class T4B_HttpAppender extends AppenderBase<ILoggingEvent> {
     public void setUrl(String url) {
         this.url = url;
     }
+
     public void setBearerToken(String bearerToken) {
         this.bearerToken = bearerToken;
     }

@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Marco
  */
-public class T4B_StoriesNanny {
 
+public class T4B_StoriesNanny {
 	private final T4B_Main main;
 	private static final Logger logger = LoggerFactory.getLogger(T4B_StoriesNanny.class);
 
@@ -33,7 +33,6 @@ public void importStories() {
         return;
     }
 
-
     String projectSlug = JOptionPane.showInputDialog(main, "Enter your Taiga project slug:");
     if (projectSlug == null || projectSlug.isEmpty()) {
         JOptionPane.showMessageDialog(main, "Project slug is required.");
@@ -41,16 +40,13 @@ public void importStories() {
     }
 	logger.info("Importing stories for project slug '{}'", projectSlug);
 
-
 	try {
         int projectId = T4B_TaigaStoryFetcher.getProjectId(authToken, projectSlug);
         JSONArray stories = T4B_TaigaStoryFetcher.fetchUserStories(authToken, projectId);
 		logger.info("Fetched {} stories (projectId={})", stories.length(), projectId);
-
    
         Queue<T4B_Story> newStories = T4B_Repository.getInstance().getNewStories();
         newStories.clear();
-
 
         for (int i = 0; i < stories.length(); i++) {
             JSONObject story = stories.getJSONObject(i);
@@ -68,13 +64,6 @@ public void importStories() {
         JOptionPane.showMessageDialog(main, "Failed to import stories from Taiga: " + e.getMessage());
     }
 }
-
-
-
-
-
-
-
 
 	public void saveAndAddNew(String text) {
 		T4B_Repository.getInstance().addStory(new T4B_Story(text, 0));  // Save locally
@@ -97,8 +86,6 @@ public void importStories() {
 		}
 	}
 
-
-
 	public void saveAndClose(String text) {
 		T4B_Story story = new T4B_Story(text, 0);
 		T4B_Repository.getInstance().addStory(story);
@@ -119,24 +106,8 @@ public void importStories() {
 		} catch (MqttException e) {
 			System.out.println("Failed to publish story: " + e.getMessage());
 		}
-
 		switchGUI();
 	}
-
-
-	// public void importStories() {
-	// 	switchGUI();
-	// }
-
-	// public LinkedList<T4B_Story> getPrevStories() {
-	// 	return T4B_Repository.getInstance().getPrevStories();
-	// }
-
-	// public Queue<T4B_Story> getNewStories() {
-	// 	return T4B_Repository.getInstance().getNewStories();
-	// }
-
-
 
 	public void cancel() {
 		System.out.println("canceling...");

@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
  *
  * @author Marco
  */
+
 public class T4B_LoginPanel extends JPanel {
 
     public T4B_LoginPanel(T4B_LoginNanny joinRoomNanny) {
@@ -21,11 +22,8 @@ public class T4B_LoginPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel subtitleLabel = new JLabel("Join the room:");
         subtitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        // JLabel accountLabel = new JLabel("Already have an account?");
-        // accountLabel.setHorizontalAlignment(SwingConstants.CENTER);
         JTextField nameField = new JTextField("Enter your name");
         JPasswordField passwordField = new JPasswordField("Enter your password");
-        // JButton enterButton = new JButton("Enter");
         JButton loginButton = new JButton("Login");
 
         setLayout(new GridLayout(7, 1));
@@ -33,11 +31,8 @@ public class T4B_LoginPanel extends JPanel {
         add(subtitleLabel);
         add(nameField);
         add(passwordField);
-        // add(enterButton);
-        // add(accountLabel);
         add(loginButton);
 
-        // enterButton.addActionListener(e -> joinRoomNanny.enterRoom(nameField.getText()));
         loginButton.addActionListener(e -> joinRoomNanny.login(nameField.getText(), new String(passwordField.getPassword())));
     }
 }

@@ -12,8 +12,8 @@ import javax.swing.*;
  *
  * @author adriansanchez
  */
-public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 
+public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 	private JLabel resultLabel;
 	private JLabel currentStoryLabel;
 	private JTextArea activeStories;
@@ -88,5 +88,4 @@ public class T4B_SouthPanel extends JPanel implements PropertyChangeListener {
 				break;
 		}
 	}
-
 }

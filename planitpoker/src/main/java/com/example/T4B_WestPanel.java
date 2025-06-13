@@ -12,6 +12,7 @@ import javax.swing.*;
  *
  * @author adriansanchez
  */
+
 public class T4B_WestPanel extends JPanel {
     private JLabel timerLabel;
     private Timer votingTimer;
@@ -37,12 +38,6 @@ public class T4B_WestPanel extends JPanel {
         timerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(timerLabel);
 
-        // add(new JLabel("Invite a teammate"));
-        // JTextField inviteField = new JTextField("https://app.planitpoker.com");
-        // inviteField.setEditable(false);
-        // add(inviteField);
-        // add(new JButton("Copy URL"));
-
         JButton confirmButton = new JButton("Confirm Vote");
         confirmButton.addActionListener(e -> dashboardNanny.confirmVote());
         add(confirmButton);
@@ -50,13 +45,13 @@ public class T4B_WestPanel extends JPanel {
         JButton resultsButton = new JButton("Show Results");
         resultsButton.addActionListener(e -> {
             dashboardNanny.showResults();
-            stopTimer(); // stop timer after round ends
+            stopTimer();
         });
         add(resultsButton);
     }
 
     private void startTimer() {
-        stopTimer(); // restart if already running
+        stopTimer();
         startTime = System.currentTimeMillis();
         votingTimer = new Timer(1000, new ActionListener() {
             public void actionPerformed(ActionEvent e) {

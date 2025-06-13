@@ -13,22 +13,14 @@ import javax.swing.SwingConstants;
  *
  * @author Marco
  */
+
 public class T4B_CreateRoomPanel extends JPanel {
 
     public T4B_CreateRoomPanel(T4B_CreateRoomNanny createRoomNanny) {
         setLayout(new GridLayout(5, 1));
         JLabel title = new JLabel("Enter Title");
-
         title.setHorizontalAlignment(SwingConstants.CENTER);
         add(title);
-
-        // JPanel box0 = new JPanel();
-        // box0.setLayout(new GridLayout(1, 2));
-        // JLabel slugLabel = new JLabel("Project Slug:");
-        // JTextField slugField = new JTextField();
-        // box0.add(slugLabel);
-        // box0.add(slugField);
-        // add(box0);
 
         JPanel box1 = new JPanel();
         box1.setLayout(new GridLayout(1, 2));
