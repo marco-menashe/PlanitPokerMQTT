@@ -20,9 +20,8 @@ import java.util.Set;
  * @author Adrian Sanchez
  * @version 1.0
  */
-public class T4B_Repository {
+public class T4B_Repository extends PropertyChangeSupport{
 	private static T4B_Repository instance;
-	private final PropertyChangeSupport pcs;
 	private String authToken;
 	private String projectSlug;
 	private String roomID;
@@ -38,7 +37,7 @@ public class T4B_Repository {
 	private final Map<String, Double> currentVotesByPlayer = new HashMap<>();
 
 	private T4B_Repository(){
-		this.pcs = new PropertyChangeSupport(this);
+		super(T4B_Repository.class);
 		this.players = new ArrayList<>();
 		this.chatMessages = new LinkedList<>();
 		this.newStories = new LinkedList<>();
@@ -60,20 +59,20 @@ public class T4B_Repository {
 	public String getAuthToken() {
 		return authToken;
 	}
-	
-	
+
+
 	public T4B_Story peekNextStory() {
 		return newStories.peek();
 	}
 
 	public void addCurrentRoom(String roomID){
 		this.roomID = roomID;
-		pcs.firePropertyChange("roomID", null, roomID);
+		firePropertyChange("roomID", null, roomID);
 	}
 
 	public void addCurrentMode(String mode){
 		this.mode = mode;
-		pcs.firePropertyChange("mode", null, mode);
+		firePropertyChange("mode", null, mode);
 	}
 
 	public void addName(String name, boolean shouldBroadcast) {
@@ -84,7 +83,7 @@ public class T4B_Repository {
 		}
 		T4B_Player player = new T4B_Player(name, generatePlayerID(name));
 		players.add(player);
-		pcs.firePropertyChange("playerAdded", null, player);
+		firePropertyChange("playerAdded", null, player);
 
 		if (shouldBroadcast && publisher != null) {
 			try {
@@ -129,7 +128,7 @@ public class T4B_Repository {
 		currentVotes.clear();
 		currentVotesByPlayer.clear();
 		storyVoters.clear();
-		pcs.firePropertyChange("votesCleared", null, null);
+		firePropertyChange("votesCleared", null, null);
 	}
 	public Map<String, Double> getCurrentVotesByPlayer() {
 		return new HashMap<>(currentVotesByPlayer);
@@ -145,9 +144,9 @@ public class T4B_Repository {
 		newStories.add(story);
 		if (currentStory == null) {
 			currentStory = story;
-			pcs.firePropertyChange("currentStorySet", null, currentStory);
+			firePropertyChange("currentStorySet", null, currentStory);
 		}
-		pcs.firePropertyChange("storyAdded", null, story);
+		firePropertyChange("storyAdded", null, story);
 	}
 
 	public Queue<T4B_Story> getNewStories() {
@@ -161,16 +160,12 @@ public class T4B_Repository {
 	public void newChatMessage(String username, String message){
 		String fullMessage = username + ": " + message;
 		chatMessages.add(fullMessage);
-		pcs.firePropertyChange("newChat", null, fullMessage);
+		firePropertyChange("newChat", null, fullMessage);
 	}
 
 
 	public List<String> getChatMessages() {
 		return chatMessages;
-	}
-
-	public void addPropertyChangeListener(PropertyChangeListener listener){
-		pcs.addPropertyChangeListener(listener);
 	}
 
 	public void completeCurrentStory(String title, int finalScore) {
@@ -190,10 +185,10 @@ public class T4B_Repository {
 			matched.setVotesByPlayer(getCurrentVotesByPlayer());
 			prevStories.add(matched);
 
-			pcs.firePropertyChange("storyCompleted", null, matched);
+			firePropertyChange("storyCompleted", null, matched);
 
 			currentStory = newStories.peek();
-			pcs.firePropertyChange("currentStorySet", null, currentStory);
+			firePropertyChange("currentStorySet", null, currentStory);
 		}
 	}
 
@@ -210,7 +205,7 @@ public class T4B_Repository {
 		votersForThisStory.add(username);
 		currentVotes.add(vote);
 		currentVotesByPlayer.put(username, vote);
-		pcs.firePropertyChange("voteAdded", null, vote);
+		firePropertyChange("voteAdded", null, vote);
 	}
 
 	public T4B_Story getCurrentStory() {
@@ -223,6 +218,6 @@ public class T4B_Repository {
 
 	public void clearPlayers() {
 		players.clear();
-		pcs.firePropertyChange("playersCleared", null, null);
+		firePropertyChange("playersCleared", null, null);
 	}
 }
